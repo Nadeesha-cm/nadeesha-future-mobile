@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Future Mobile Diyawiddagama – Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#241b4b; --muted:#7a729c; --bg:#f6f2ff; --card:#ffffff; --line:#ece6ff;
+  --violet:#7c4dff; --pink:#ff4f9a; --orange:#ff9a3c; --teal:#14c8b0; --blue:#2f8cff; --red:#ff5468; --green:#22c55e; --yellow:#ffc933;
+  --g1:linear-gradient(135deg,#7c4dff,#b44dff);
+  --g2:linear-gradient(135deg,#ff4f9a,#ff8a5c);
+  --g3:linear-gradient(135deg,#14c8b0,#2f8cff);
+  --g4:linear-gradient(135deg,#ff9a3c,#ffc933);
+  --g5:linear-gradient(135deg,#2f8cff,#7c4dff);
+  --g6:linear-gradient(135deg,#ff5468,#ff4f9a);
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:
+  radial-gradient(900px 500px at 100% -10%,#ffd9ec 0,transparent 60%),
+  radial-gradient(800px 500px at -10% 10%,#d6e6ff 0,transparent 60%),
+  radial-gradient(700px 500px at 60% 110%,#d5fff3 0,transparent 60%),var(--bg);
+  min-height:100vh}
+h1,h2,h3{font-family:'Baloo 2','Nunito',system-ui,sans-serif;line-height:1.1}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:22px 16px;background:linear-gradient(180deg,#3a1d8f 0%,#6a2fd6 55%,#c43fb5 100%);color:#fff;display:flex;flex-direction:column;gap:8px;overflow:auto}
+.brand{display:flex;align-items:center;gap:12px;padding:6px 10px 18px}
+.brand .logo{width:46px;height:46px;border-radius:15px;background:var(--g4);display:grid;place-items:center;font-size:24px;box-shadow:0 8px 20px rgba(0,0,0,.25);transform:rotate(-6deg)}
+.brand h1{font-size:18px;font-weight:800;line-height:1.15}
+.brand small{display:block;opacity:.75;font-size:12px;font-weight:600}
+nav{display:flex;flex-direction:column;gap:6px}
+nav button{display:flex;align-items:center;gap:12px;background:transparent;color:#fff;padding:12px 14px;border-radius:16px;font-weight:700;font-size:15px;text-align:left;transition:background .15s,transform .15s}
+nav button .ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:rgba(255,255,255,.16)}
+nav button:hover{background:rgba(255,255,255,.12)}
+nav button.on{background:#fff;color:var(--violet)}
+nav button.on .ic{background:var(--g1);color:#fff}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.side-foot button{background:rgba(255,255,255,.14);color:#fff;padding:11px 14px;border-radius:14px;font-weight:700;font-size:14px}
+.side-foot button:hover{background:rgba(255,255,255,.24)}
+
+main{padding:28px clamp(16px,3vw,36px) 60px;max-width:1280px;width:100%}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.top h2{font-size:clamp(26px,4vw,38px);font-weight:800}
+.top p{color:var(--muted);font-weight:600;margin-top:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{padding:12px 18px;border-radius:15px;font-weight:800;font-size:14.5px;color:#fff;background:var(--g1);box-shadow:0 8px 18px rgba(124,77,255,.28);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.pink{background:var(--g2);box-shadow:0 8px 18px rgba(255,79,154,.28)}
+.btn.teal{background:var(--g3);box-shadow:0 8px 18px rgba(20,200,176,.28)}
+.btn.orange{background:var(--g4);color:#4a2b00;box-shadow:0 8px 18px rgba(255,154,60,.3)}
+.btn.ghost{background:#fff;color:var(--violet);box-shadow:none;border:2px solid var(--line)}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:11px;box-shadow:none}
+.btn.red{background:var(--g6);box-shadow:none}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:22px}
+.stat{position:relative;overflow:hidden;border-radius:var(--r);padding:20px;color:#fff;min-height:128px;box-shadow:0 14px 30px rgba(36,27,75,.14)}
+.stat::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.18)}
+.stat::before{content:"";position:absolute;right:30px;bottom:-40px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
+.stat .em{font-size:26px}
+.stat .lb{font-weight:700;opacity:.92;font-size:14px;margin-top:6px}
+.stat .v{font-family:'Baloo 2',sans-serif;font-size:clamp(22px,2.4vw,30px);font-weight:800;margin-top:2px;position:relative;z-index:1}
+.s1{background:var(--g1)}.s2{background:var(--g3)}.s3{background:var(--g2)}.s4{background:var(--g4);color:#4a2b00}.s5{background:var(--g5)}.s6{background:var(--g6)}
+
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
+.panel{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:0 10px 28px rgba(36,27,75,.07);border:2px solid #fff}
+.panel h3{font-size:20px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.legend{display:flex;gap:14px;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.toolbar input,.toolbar select{padding:11px 14px;border-radius:14px;border:2px solid var(--line);background:#fff;min-width:150px;font-weight:600}
+.toolbar input[type=search]{flex:1;min-width:200px}
+.tablewrap{overflow-x:auto;border-radius:var(--r);background:#fff;box-shadow:0 10px 28px rgba(36,27,75,.07)}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{background:linear-gradient(90deg,#efe8ff,#ffe8f3);text-align:left;padding:13px 14px;font-size:13px;font-weight:800;color:#5b3fc4}
+td{padding:12px 14px;border-top:1px solid var(--line);font-weight:600;font-size:14.5px;vertical-align:middle}
+tr:hover td{background:#faf7ff}
+td.num,th.num{text-align:right;white-space:nowrap}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:800}
+.p-v{background:#ece5ff;color:#5b3fc4}.p-g{background:#d9f8ec;color:#0c8a5c}.p-r{background:#ffe1e5;color:#c2263d}.p-o{background:#ffecd2;color:#a85a00}.p-b{background:#dcebff;color:#1c62c9}.p-p{background:#ffe0ef;color:#c4156b}
+.thumb{width:42px;height:42px;border-radius:11px;object-fit:cover;cursor:zoom-in;border:2px solid var(--line);background:#f1ecff}
+.noimg{color:#c0b8e0;font-size:13px}
+.rowact{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.empty{padding:44px 20px;text-align:center;color:var(--muted);font-weight:700}
+.empty .big{font-size:44px;margin-bottom:8px}
+.pos{color:#0c8a5c}.neg{color:#c2263d}
+.list .item{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px dashed var(--line)}
+.list .item:first-child{border-top:0}
+.list .dot{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;flex:none}
+.list .meta{flex:1;min-width:0}
+.list .meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list .meta span{font-size:12.5px;color:var(--muted);font-weight:600}
+.list .amt{font-weight:800;white-space:nowrap}
+
+.overlay{position:fixed;inset:0;background:rgba(36,27,75,.55);backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
+.overlay.hidden{display:none}
+.modal{background:#fff;border-radius:26px;width:min(560px,100%);max-height:94vh;overflow:auto;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+.modal h3{font-size:25px;font-weight:800;margin-bottom:14px}
+.modal .hd{height:8px;border-radius:99px;margin:-8px 0 16px;background:linear-gradient(90deg,var(--violet),var(--pink),var(--orange),var(--teal))}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f .full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:800;color:#5b3fc4;margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;padding:11px 13px;border-radius:13px;border:2px solid var(--line);background:#fcfbff;font-weight:600}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--violet);outline:0}
+.chk{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14px;padding:6px 0}
+.chk input{width:20px;height:20px;accent-color:var(--violet)}
+.drop{border:2.5px dashed #cdbdff;border-radius:16px;padding:14px;text-align:center;background:#faf7ff;cursor:pointer;font-weight:700;color:var(--violet)}
+.drop:hover{background:#f1eaff}
+.drop img{max-width:100%;max-height:160px;border-radius:12px;margin-top:8px;display:block;margin-inline:auto}
+.total{grid-column:1/-1;padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,#ece5ff,#ffe6f2);font-weight:800;display:flex;justify-content:space-between}
+.mfoot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.qrbox{display:grid;place-items:center;gap:10px;text-align:center}
+.qrbox .frame{padding:16px;border-radius:22px;background:linear-gradient(135deg,#7c4dff,#ff4f9a,#ff9a3c);display:inline-block}
+.qrbox .inner{background:#fff;padding:12px;border-radius:14px}
+.qrbox code{font-size:12px;color:var(--muted);word-break:break-all}
+#lightbox img{max-width:min(94vw,900px);max-height:90vh;border-radius:18px;background:#fff}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#241b4b;color:#fff;padding:12px 20px;border-radius:14px;font-weight:700;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.warn{background:#fff3d6;color:#8a5a00;padding:10px 14px;border-radius:12px;font-weight:700;font-size:13.5px;margin-bottom:14px}
+
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tabs button{padding:10px 16px;border-radius:14px;background:#fff;color:var(--violet);font-weight:800;border:2px solid var(--line)}
+.tabs button.on{background:var(--g1);color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(124,77,255,.28)}
+.jcard{background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 8px 22px rgba(36,27,75,.06);border-left:6px solid var(--violet)}
+.jcard .jh{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px}
+.jcard .jh .memo{flex:1;font-weight:700;color:var(--muted);min-width:140px}
+.jcard table{min-width:0}
+.jcard td{padding:6px 8px;font-size:14px}
+.jcard td.ind{padding-left:34px;color:#5b3fc4}
+.jrow{display:grid;grid-template-columns:1fr 100px 100px 40px;gap:8px;margin-bottom:8px;align-items:center}
+.jrow select,.jrow input{padding:10px;border-radius:12px;border:2px solid var(--line);width:100%;background:#fcfbff}
+.sumrow{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:14px;font-weight:800;margin-top:8px;background:linear-gradient(90deg,#ece5ff,#ffe6f2)}
+.ok{background:#d9f8ec;color:#0c8a5c;padding:10px 14px;border-radius:12px;font-weight:800;margin-top:12px}
+.bad{background:#ffe1e5;color:#c2263d;padding:10px 14px;border-radius:12px;font-weight:800;margin-top:12px}
+.sec{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:15px;color:#5b3fc4;margin:12px 0 2px}
+.quote{position:relative;display:flex;align-items:center;gap:16px;border-radius:var(--r);padding:22px 26px;margin-bottom:20px;color:#fff;background:linear-gradient(120deg,#7c4dff 0%,#c43fb5 55%,#ff8a5c 100%);box-shadow:0 14px 30px rgba(124,77,255,.25);overflow:hidden}
+.quote::after{content:"";position:absolute;right:-40px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.13)}
+.qmark{font-family:'Baloo 2',serif;font-size:84px;line-height:.7;font-weight:800;opacity:.5;align-self:flex-start;margin-top:10px}
+.qbody{flex:1;position:relative;z-index:1}
+.qtext{font-family:'Baloo 2','Nunito',sans-serif;font-size:clamp(19px,2.4vw,27px);font-weight:700;line-height:1.25;transition:opacity .4s}
+.qauth{margin-top:6px;font-weight:700;opacity:.9;transition:opacity .4s}
+.qnext{position:relative;z-index:1;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;font-size:20px;font-weight:800;flex:none}
+.qnext:hover{background:rgba(255,255,255,.36)}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px;gap:8px}
+  .brand{padding:0 6px 0 0}.brand small{display:none}
+  nav{flex-direction:row;flex-wrap:wrap}
+  nav button{padding:8px 10px;font-size:13.5px}
+  nav button .ic{width:26px;height:26px;font-size:14px}
+  .side-foot{margin:0;flex-direction:row}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:520px){.f{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="logo">📱</div>
+      <div><h1 id="brandName">Future Mobile</h1><small>Stock &amp; money manager</small></div>
+    </div>
+    <nav id="nav">
+      <button data-v="dash"><span class="ic">🏠</span>Dashboard</button>
+      <button data-v="stock"><span class="ic">📦</span>Stock</button>
+      <button data-v="income"><span class="ic">💰</span>Income</button>
+      <button data-v="expense"><span class="ic">🧾</span>Expenses</button>
+      <button data-v="reload"><span class="ic">📲</span>Reload</button>
+      <button data-v="recv"><span class="ic">🤝</span>Receivable</button>
+      <button data-v="pay"><span class="ic">📒</span>Payable</button>
+      <button data-v="acct"><span class="ic">📚</span>Accounts</button>
+    </nav>
+    <div class="side-foot">
+      <button onclick="openSettings()">⚙️ Settings</button>
+      <button onclick="exportExcel()">📊 Export to Excel</button>
+      <button onclick="exportBackup()">⬇️ Backup data</button>
+      <button onclick="document.getElementById('restoreFile').click()">⬆️ Restore backup</button>
+      <input type="file" id="restoreFile" accept="application/json" hidden>
+    </div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<div id="modal" class="overlay hidden"><div class="modal" id="modalBody"></div></div>
+<div id="lightbox" class="overlay hidden" onclick="this.classList.add('hidden')"><img id="lbImg" alt="Bill"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const todayStr = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const cur = () => state.settings.currency || 'Rs.';
+const money = n => cur() + ' ' + Number(n || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const sum = (arr, f) => arr.reduce((a, x) => a + (+f(x) || 0), 0);
+function toast(msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+
+/* ---------- storage (IndexedDB, falls back to memory) ---------- */
+let db = null, dbOk = true;
+const memKV = {}, memImg = {};
+function openDB() {
+  return new Promise(res => {
+    try {
+      const r = indexedDB.open('phoneshop-manager', 1);
+      r.onupgradeneeded = () => { r.result.createObjectStore('kv'); r.result.createObjectStore('img'); };
+      r.onsuccess = () => { db = r.result; res(); };
+      r.onerror = () => { dbOk = false; res(); };
+    } catch (e) { dbOk = false; res(); }
+  });
+}
+function idb(store, mode, fn) {
+  return new Promise(res => {
+    if (!db) return res(null);
+    try {
+      const tx = db.transaction(store, mode); const out = fn(tx.objectStore(store));
+      tx.oncomplete = () => res(out && 'result' in out ? out.result : null);
+      tx.onerror = () => res(null);
+    } catch (e) { res(null); }
+  });
+}
+const idbGet = (s, k) => db ? idb(s, 'readonly', st => st.get(k)) : Promise.resolve((s === 'kv' ? memKV : memImg)[k] ?? null);
+const idbSet = (s, k, v) => db ? idb(s, 'readwrite', st => st.put(v, k)) : Promise.resolve(((s === 'kv' ? memKV : memImg)[k] = v));
+const idbDel = (s, k) => db ? idb(s, 'readwrite', st => st.delete(k)) : Promise.resolve(delete (s === 'kv' ? memKV : memImg)[k]);
+
+let state = {
+  products: [], sales: [], expenses: [], settle: [], journal: [], rl: {cos: [], buys: [], sells: []}, names: {}, custom: [],
+  settings: {shop: 'Future Mobile Diyawiddagama', currency: 'Rs.', lowStock: 5, delPw: 'Trust'}
+};
+const save = () => idbSet('kv', 'state', state);
+
+/* ---------- images ---------- */
+const imgCache = {};
+async function getImg(id) { if (!id) return null; if (imgCache[id]) return imgCache[id]; const v = await idbGet('img', id); if (v) imgCache[id] = v; return v; }
+async function putImg(dataUrl) { const id = uid(); imgCache[id] = dataUrl; await idbSet('img', id, dataUrl); return id; }
+function imgInUse(id) { return state.products.some(p => p.img === id) || state.sales.some(s => s.img === id) || state.expenses.some(e => e.img === id) || state.rl.buys.some(b => b.img === id); }
+async function dropImg(id) { if (id && !imgInUse(id)) { delete imgCache[id]; await idbDel('img', id); } }
+function compress(file, max = 1000, q = 0.72) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = rej;
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = rej;
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/jpeg', q));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+function hydrate() {
+  document.querySelectorAll('img[data-img]').forEach(async el => { const s = await getImg(el.dataset.img); if (s) el.src = s; });
+}
+const thumb = id => id ? `<img class="thumb" data-img="${id}" alt="Bill" onclick="showImg('${id}')">` : `<span class="noimg">No bill</span>`;
+async function showImg(id) { const s = await getImg(id); if (!s) return; $('#lbImg').src = s; $('#lightbox').classList.remove('hidden'); }
+
+let pending = null, pendingChanged = false;
+function billField(existingId) {
+  pending = null; pendingChanged = false;
+  return `<div class="full"><label>Bill / receipt photo</label>
+    <label class="drop" for="billFile" style="display:block;margin:0">📷 Tap to add or take a photo
+      <div id="billPrev">${existingId ? `<img data-img="${existingId}" alt="Bill">` : ''}</div>
+    </label>
+    <input type="file" id="billFile" accept="image/*" hidden onchange="onBill(this)"></div>`;
+}
+async function onBill(inp) {
+  const f = inp.files[0]; if (!f) return;
+  try { pending = await compress(f); pendingChanged = true; $('#billPrev').innerHTML = `<img src="${pending}" alt="Bill">`; }
+  catch (e) { toast('Could not read that image'); }
+}
+async function takeBill(oldId) {
+  if (!pendingChanged) return oldId || null;
+  const id = pending ? await putImg(pending) : null;
+  return id;
+}
+
+/* ---------- modal ---------- */
+function openModal(html) { $('#modalBody').innerHTML = `<div class="hd"></div>` + html; $('#modal').classList.remove('hidden'); hydrate(); }
+function closeModal() { $('#modal').classList.add('hidden'); }
+$('#modal').addEventListener('mousedown', e => { if (e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); $('#lightbox').classList.add('hidden'); } });
+const val = id => $('#' + id).value;
+
+/* ---------- QR ---------- */
+function openQR(text, title, sub) {
+  openModal(`<h3>${esc(title)}</h3><div class="qrbox"><div class="frame"><div class="inner" id="qrTarget"></div></div>
+    <div style="font-weight:700">${esc(sub || '')}</div><code>${esc(text)}</code></div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Close</button>
+    <button class="btn teal" onclick="downloadQR()">Download</button>
+    <button class="btn" onclick="printQR()">Print label</button></div>`);
+  const t = $('#qrTarget');
+  if (typeof QRCode === 'undefined') { t.innerHTML = '<div class="warn">QR needs internet the first time the page loads. Connect and reload.</div>'; return; }
+  new QRCode(t, {text, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M});
+}
+function qrDataUrl() { const c = document.querySelector('#qrTarget canvas'); if (c) return c.toDataURL('image/png'); const i = document.querySelector('#qrTarget img'); return i ? i.src : null; }
+function downloadQR() { const u = qrDataUrl(); if (!u) return; const a = document.createElement('a'); a.href = u; a.download = 'qr-' + ($('#modalBody h3').textContent || 'code').replace(/\W+/g, '-') + '.png'; a.click(); }
+function printQR() {
+  const u = qrDataUrl(); if (!u) return;
+  const w = window.open('', '_blank'); if (!w) return toast('Allow pop-ups to print');
+  w.document.write(`<html><body style="font-family:sans-serif;text-align:center;padding:20px"><h3>${esc($('#modalBody h3').textContent)}</h3><img src="${u}" width="220"><p>${esc($('#modalBody .qrbox div:nth-child(2)').textContent)}</p><script>onload=()=>print()<\/script></body></html>`);
+  w.document.close();
+}
+
+/* ---------- UI state & routing ---------- */
+const ui = {view: 'dash', q: '', cat: '', month: todayStr().slice(0, 7), low: false, acTab: 'tb', acct: 'cash'};
+document.querySelectorAll('#nav button').forEach(b => b.onclick = () => { ui.view = b.dataset.v; ui.q = ''; ui.cat = ''; render(); window.scrollTo(0, 0); });
+
+function render() {
+  applyNames();
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === ui.view));
+  $('#brandName').textContent = state.settings.shop || 'Phone Shop';
+  document.title = (state.settings.shop || 'Phone Shop') + ' – Manager';
+  const warn = dbOk ? '' : `<div class="warn">Saving is blocked in this browser, so data will be lost when you close the tab. Open the file in Chrome, Edge or Firefox, and use Backup often.</div>`;
+  $('#main').innerHTML = warn + ({dash: vDash, stock: vStock, income: vIncome, expense: vExpense, reload: vReload, recv: () => vDues('receipt'), pay: () => vDues('payment'), acct: vAccounts}[ui.view])();
+  hydrate();
+}
+
+/* ---------- accounting core (double entry) ---------- */
+const FIXED = [
+  {id: 'cash', code: '1000', name: 'Cash in Hand', type: 'asset'},
+  {id: 'petty', code: '1005', name: 'Petty Cash', type: 'asset'},
+  {id: 'bank', code: '1010', name: 'Bank', type: 'asset'},
+  {id: 'ar', code: '1100', name: 'Accounts Receivable', type: 'asset'},
+  {id: 'inventory', code: '1200', name: 'Inventory (stock)', type: 'asset'},
+  {id: 'ap', code: '2000', name: 'Accounts Payable', type: 'liability'},
+  {id: 'capital', code: '3000', name: "Owner's Capital", type: 'equity'},
+  {id: 'drawings', code: '3100', name: "Owner's Drawings", type: 'draw'},
+  {id: 'sales', code: '4000', name: 'Sales – Accessories', type: 'income'},
+  {id: 'repair', code: '4100', name: 'Repair Income', type: 'income'},
+  {id: 'otherinc', code: '4200', name: 'Other Income', type: 'income'},
+  {id: 'cogs', code: '5000', name: 'Cost of Goods Sold', type: 'expense'},
+  {id: 'rsales', code: '4300', name: 'Reload Sales', type: 'income'},
+  {id: 'rcogs', code: '5100', name: 'Cost of Reload Sold', type: 'expense'}
+];
+FIXED.forEach(a => a.def = a.name);
+function applyNames() { FIXED.forEach(a => a.name = (state.names && state.names[a.id]) || a.def); }
+const TYPENAME = {asset: 'Asset', liability: 'Liability', equity: 'Equity', draw: 'Equity', income: 'Income', expense: 'Expense'};
+const TYPEPILL = {asset: 'p-b', liability: 'p-o', equity: 'p-v', draw: 'p-v', income: 'p-g', expense: 'p-p'};
+const PAYL = {cash: 'Cash in hand', petty: 'Petty cash', bank: 'Bank', credit: 'On credit', owner: "Owner's money"};
+const SRC = {sale: ['Sale', 'p-g'], expense: ['Expense', 'p-p'], receipt: ['Received', 'p-b'], payment: ['Paid', 'p-o'], reload: ['Reload', 'p-b'], manual: ['Manual', 'p-v']};
+const isDebitNormal = t => t === 'asset' || t === 'expense' || t === 'draw';
+function accounts() {
+  const cats = [...new Set([...ECATS.filter(c => c !== 'Stock purchase'), ...state.expenses.map(e => e.category).filter(c => c && c !== 'Stock purchase')])];
+  return [...FIXED, ...(state.custom || []).map((c, i) => ({id: c.id, code: String(7000 + i * 10), name: c.name, type: c.type})), ...state.rl.cos.map((c, i) => ({id: 'rl:' + c.id, code: String(1300 + i), name: 'Reload float – ' + c.name, type: 'asset'})), ...cats.map((c, i) => ({id: 'x:' + c, code: String(6000 + i * 10), name: c, type: 'expense'}))];
+}
+const acctById = id => accounts().find(a => a.id === id) || {id, code: '----', name: id, type: 'expense'};
+const settledFor = id => sum(state.settle.filter(t => t.ref === id), t => t.amount);
+
+function buildJournal() {
+  const J = [];
+  const add = (date, memo, src, ref, lines) => J.push({id: src + ':' + ref, date, memo, src, ref, lines: lines.filter(l => l.dr || l.cr)});
+  state.sales.forEach(s => {
+    const pay = s.pay || 'cash', dr = pay === 'credit' ? 'ar' : pay;
+    const cr = s.type === 'sale' ? 'sales' : s.type === 'repair' ? 'repair' : 'otherinc';
+    const L = [{a: dr, dr: s.total, cr: 0}, {a: cr, dr: 0, cr: s.total}];
+    if (s.type === 'sale' && s.cost > 0) L.push({a: 'cogs', dr: s.cost, cr: 0}, {a: 'inventory', dr: 0, cr: s.cost});
+    add(s.date, 'Sale: ' + s.name + (s.party ? ' – ' + s.party : ''), 'sale', s.id, L);
+  });
+  state.expenses.forEach(e => {
+    const pay = e.pay || 'cash';
+    const dr = e.category === 'Stock purchase' ? 'inventory' : 'x:' + e.category;
+    const cr = pay === 'credit' ? 'ap' : pay === 'owner' ? 'capital' : pay;
+    add(e.date, e.title + (e.party ? ' – ' + e.party : ''), 'expense', e.id, [{a: dr, dr: e.amount, cr: 0}, {a: cr, dr: 0, cr: e.amount}]);
+  });
+  state.settle.forEach(t => {
+    if (t.kind === 'receipt') add(t.date, 'Received from ' + (t.party || 'customer') + (t.note ? ' – ' + t.note : ''), 'receipt', t.id, [{a: t.method, dr: t.amount, cr: 0}, {a: 'ar', dr: 0, cr: t.amount}]);
+    else add(t.date, 'Paid to ' + (t.party || 'supplier') + (t.note ? ' – ' + t.note : ''), 'payment', t.id, [{a: 'ap', dr: t.amount, cr: 0}, {a: t.method, dr: 0, cr: t.amount}]);
+  });
+  state.journal.forEach(j => add(j.date, j.memo, 'manual', j.id, j.lines.map(l => ({a: l.a, dr: +l.dr || 0, cr: +l.cr || 0}))));
+  state.rl.buys.forEach(b => add(b.date, 'Reload stock: ' + coName(b.co), 'reload', b.id, [{a: 'rl:' + b.co, dr: b.paid, cr: 0}, {a: b.pay === 'owner' ? 'capital' : b.pay, dr: 0, cr: b.paid}]));
+  state.rl.sells.forEach(x => add(x.date, 'Reload sale: ' + coName(x.co) + (x.number ? ' ' + x.number : ''), 'reload', x.id, [{a: x.pay === 'credit' ? 'ar' : x.pay, dr: x.amount, cr: 0}, {a: 'rsales', dr: 0, cr: x.amount}, {a: 'rcogs', dr: x.cost, cr: 0}, {a: 'rl:' + x.co, dr: 0, cr: x.cost}]));
+  return J.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
+}
+function balances(to, from) {
+  const B = {};
+  buildJournal().forEach(j => {
+    if (to && j.date > to) return; if (from && j.date < from) return;
+    j.lines.forEach(l => { const b = B[l.a] || (B[l.a] = {dr: 0, cr: 0}); b.dr += l.dr; b.cr += l.cr; });
+  });
+  return B;
+}
+function bal(B, a) { const x = B[a.id] || {dr: 0, cr: 0}; return isDebitNormal(a.type) ? x.dr - x.cr : x.cr - x.dr; }
+function balCards() {
+  const B = balances(), g = id => bal(B, acctById(id)); let cin = 0, cout = 0, pin = 0, pout = 0;
+  buildJournal().forEach(j => { if (j.date === todayStr()) j.lines.forEach(l => { if (l.a === 'cash') { cin += l.dr; cout += l.cr; } else if (l.a === 'petty') { pin += l.dr; pout += l.cr; } }); });
+  return `<div class="cards">
+    <div class="stat s2"><div class="em">💵</div><div class="lb">${esc(acctById('cash').name)}</div><div class="v">${money(g('cash'))}</div><div class="lb" style="font-size:12px;margin-top:2px;position:relative;z-index:1">In ${money(cin)} · Out ${money(cout)} today</div></div>
+    <div class="stat s4"><div class="em">🧰</div><div class="lb">${esc(acctById('petty').name)}</div><div class="v">${money(g('petty'))}</div><div class="lb" style="font-size:12px;margin-top:2px;position:relative;z-index:1">In ${money(pin)} · Spent ${money(pout)} today</div></div>
+    <div class="stat s5"><div class="em">🏦</div><div class="lb">${esc(acctById('bank').name)}</div><div class="v">${money(g('bank'))}</div></div>
+    <div class="stat s4"><div class="em">🤝</div><div class="lb">Customers owe you</div><div class="v">${money(g('ar'))}</div></div>
+    <div class="stat s3"><div class="em">📒</div><div class="lb">You owe suppliers</div><div class="v">${money(g('ap'))}</div></div>
+    <div class="stat s1"><div class="em">📲</div><div class="lb">Reload balance (at cost)</div><div class="v">${money(sum(state.rl.cos, c => g('rl:' + c.id)))}</div></div>
+  </div>`;
+}
+function payBlock(pre, kind) {
+  const opts = kind === 'sale'
+    ? [['cash', 'Cash in hand'], ['bank', 'Bank'], ['credit', 'On credit (customer pays later)']]
+    : [['cash', 'Cash in hand'], ['bank', 'Bank'], ['petty', 'Petty cash'], ['credit', 'On credit (pay supplier later)'], ['owner', kind === 'stock' ? "Owner's money / opening stock" : "Owner's own money"]];
+  return `<div class="full"><label>${kind === 'sale' ? 'Money received in' : 'Paid from'}</label><select id="${pre}_pay" onchange="payToggle('${pre}')">${opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select></div>
+  <div class="full" id="${pre}_pwrap" style="display:none"><label>${kind === 'sale' ? 'Customer name' : 'Supplier name'}</label><input id="${pre}_party" placeholder="Required for credit"></div>`;
+}
+function payToggle(pre) { $('#' + pre + '_pwrap').style.display = val(pre + '_pay') === 'credit' ? '' : 'none'; }
+function payPill(x, total) {
+  const p = x.pay || 'cash';
+  if (p === 'credit') { const due = total - settledFor(x.id); return due > 0.004 ? `<span class="pill p-o">Credit · ${money(due)} due</span>` : `<span class="pill p-g">Credit · settled</span>`; }
+  return `<span class="pill ${p === 'bank' ? 'p-b' : p === 'owner' ? 'p-v' : 'p-g'}">${PAYL[p]}</span>`;
+}
+
+/* ---------- dashboard ---------- */
+function dayTotals(n) {
+  const out = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const d = new Date(Date.now() - new Date().getTimezoneOffset() * 60000 - i * 864e5).toISOString().slice(0, 10);
+    out.push({d, inc: sum(state.sales.filter(s => s.date === d), s => s.total), exp: sum(state.expenses.filter(e => e.date === d), e => e.amount)});
+  }
+  return out;
+}
+function chart() {
+  const data = dayTotals(7), max = Math.max(1, ...data.flatMap(x => [x.inc, x.exp]));
+  const W = 560, H = 220, base = 190, bw = 22;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Income and expenses for the last 7 days">`;
+  [0.25, 0.5, 0.75, 1].forEach(f => { const y = base - f * 160; s += `<line x1="10" x2="${W - 10}" y1="${y}" y2="${y}" stroke="#ece6ff" stroke-dasharray="4 5"/>`; });
+  data.forEach((x, i) => {
+    const cx = 40 + i * 76, hi = x.inc / max * 160, he = x.exp / max * 160;
+    s += `<rect x="${cx - bw - 2}" y="${base - hi}" width="${bw}" height="${Math.max(hi, 2)}" rx="7" fill="#14c8b0"><title>Income ${money(x.inc)}</title></rect>`;
+    s += `<rect x="${cx + 2}" y="${base - he}" width="${bw}" height="${Math.max(he, 2)}" rx="7" fill="#ff4f9a"><title>Expenses ${money(x.exp)}</title></rect>`;
+    s += `<text x="${cx}" y="${base + 22}" text-anchor="middle" font-size="12" font-weight="700" fill="#7a729c">${x.d.slice(5)}</text>`;
+  });
+  return s + '</svg>';
+}
+function vDash() {
+  const m = todayStr().slice(0, 7), t = todayStr();
+  const incM = sum(state.sales.filter(s => s.date.startsWith(m)), s => s.total);
+  const expM = sum(state.expenses.filter(e => e.date.startsWith(m)), e => e.amount);
+  const incT = sum(state.sales.filter(s => s.date === t), s => s.total);
+  const profitM = sum(state.sales.filter(s => s.date.startsWith(m)), s => s.total - s.cost);
+  const stockVal = sum(state.products, p => p.qty * p.cost);
+  const low = state.products.filter(p => p.qty <= state.settings.lowStock);
+  const recent = [...state.sales.map(s => ({...s, k: 'in', t: s.name, a: s.total})), ...state.expenses.map(e => ({...e, k: 'out', t: e.title, a: e.amount}))]
+    .sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).slice(0, 7);
+  return `
+  <div class="top"><div><h2>Hello, ${esc(state.settings.shop)} 👋</h2><p>Here is how the shop is doing today.</p></div>
+    <div class="actions"><button class="btn teal" onclick="openSale()">+ New sale</button><button class="btn pink" onclick="openExpense()">+ Expense</button><button class="btn orange" onclick="exportExcel()">📊 Excel</button><button class="btn" onclick="openProduct()">+ Add item</button></div></div>
+  ${quoteCard()}
+  ${balCards()}
+  <div class="cards">
+    <div class="stat s1"><div class="em">📲</div><div class="lb">Reload margin today</div><div class="v">${money(sum(state.rl.sells.filter(x => x.date === t), x => x.amount - x.cost))}</div></div>
+    <div class="stat s2"><div class="em">💵</div><div class="lb">Income today</div><div class="v">${money(incT)}</div></div>
+    <div class="stat s1"><div class="em">📈</div><div class="lb">Income this month</div><div class="v">${money(incM)}</div></div>
+    <div class="stat s3"><div class="em">🧾</div><div class="lb">Expenses this month</div><div class="v">${money(expM)}</div></div>
+    <div class="stat s5"><div class="em">🏦</div><div class="lb">Money left (income − expenses)</div><div class="v">${money(incM - expM)}</div></div>
+    <div class="stat s4"><div class="em">✨</div><div class="lb">Profit on sales this month</div><div class="v">${money(profitM)}</div></div>
+    <div class="stat s6"><div class="em">📦</div><div class="lb">Stock value (at cost)</div><div class="v">${money(stockVal)}</div></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><h3>🗓️ Last 7 days</h3>
+      <div class="legend"><span><i style="background:#14c8b0"></i>Income</span><span><i style="background:#ff4f9a"></i>Expenses</span></div>${chart()}</div>
+    <div class="panel"><h3>⚠️ Running low (${low.length})</h3>
+      ${low.length ? `<div class="list">${low.slice(0, 7).map(p => `<div class="item"><div class="dot" style="background:#ffe1e5">📦</div><div class="meta"><b>${esc(p.name)}</b><span>${esc(p.category || '')}</span></div><div class="amt ${p.qty === 0 ? 'neg' : ''}">${p.qty} left</div></div>`).join('')}</div>`
+      : `<div class="empty"><div class="big">🎉</div>All items are well stocked.</div>`}</div>
+  </div>
+  <div class="panel" style="margin-top:18px"><h3>🕒 Recent activity</h3>
+    ${recent.length ? `<div class="list">${recent.map(r => `<div class="item"><div class="dot" style="background:${r.k === 'in' ? '#d9f8ec' : '#ffe0ef'}">${r.k === 'in' ? '💰' : '🧾'}</div><div class="meta"><b>${esc(r.t)}</b><span>${r.date}${r.qty > 1 ? ' · qty ' + r.qty : ''}</span></div><div class="amt ${r.k === 'in' ? 'pos' : 'neg'}">${r.k === 'in' ? '+' : '−'} ${money(r.a)}</div></div>`).join('')}</div>`
+    : `<div class="empty"><div class="big">🚀</div>Nothing yet. Add your first item or record a sale to get started.</div>`}</div>`;
+}
+
+/* ---------- stock ---------- */
+const CATS = ['Phone case', 'Screen protector', 'Charger', 'Cable', 'Earphones', 'Power bank', 'Memory card', 'Spare part', 'Phone', 'Other'];
+const catColor = c => ['p-v', 'p-p', 'p-b', 'p-o', 'p-g'][[...(c || 'x')].reduce((a, ch) => a + ch.charCodeAt(0), 0) % 5];
+function vStock() {
+  const q = ui.q.toLowerCase();
+  const cats = [...new Set(state.products.map(p => p.category).filter(Boolean))].sort();
+  let list = state.products.filter(p => (!q || (p.name + p.sku + (p.category || '')).toLowerCase().includes(q)) && (!ui.cat || p.category === ui.cat) && (!ui.low || p.qty <= state.settings.lowStock));
+  list.sort((a, b) => a.name.localeCompare(b.name));
+  return `<div class="top"><div><h2>Stock 📦</h2><p>${state.products.length} items · ${sum(state.products, p => p.qty)} pieces in the shop</p></div>
+    <div class="actions"><button class="btn ghost" onclick="exportStockCSV()">Export CSV</button><button class="btn" onclick="openProduct()">+ Add item</button></div></div>
+  <div class="toolbar"><input type="search" placeholder="Search name, SKU or category…" value="${esc(ui.q)}" oninput="ui.q=this.value;keepFocus(vStockBody)">
+    <select onchange="ui.cat=this.value;render()"><option value="">All categories</option>${cats.map(c => `<option ${ui.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+    <select onchange="ui.low=this.value==='1';render()"><option value="0">All stock levels</option><option value="1" ${ui.low ? 'selected' : ''}>Low stock only</option></select></div>
+  <div id="stockBody">${stockTable(list)}</div>`;
+}
+function vStockBody() { const q = ui.q.toLowerCase(); const list = state.products.filter(p => (!q || (p.name + p.sku + (p.category || '')).toLowerCase().includes(q)) && (!ui.cat || p.category === ui.cat) && (!ui.low || p.qty <= state.settings.lowStock)).sort((a, b) => a.name.localeCompare(b.name)); $('#stockBody').innerHTML = stockTable(list); hydrate(); }
+function keepFocus(fn) { fn(); }
+function stockTable(list) {
+  if (!list.length) return `<div class="tablewrap"><div class="empty"><div class="big">📦</div>No items here yet. Press “Add item” to enter your first accessory.</div></div>`;
+  return `<div class="tablewrap"><table><thead><tr><th>Item</th><th>Category</th><th class="num">Qty</th><th class="num">Cost</th><th class="num">Sell price</th><th>Added</th><th>Bill</th><th></th></tr></thead><tbody>
+  ${list.map(p => `<tr><td><b>${esc(p.name)}</b><br><span style="color:var(--muted);font-size:12.5px">${esc(p.sku)}</span></td>
+    <td><span class="pill ${catColor(p.category)}">${esc(p.category || '—')}</span></td>
+    <td class="num"><span class="pill ${p.qty === 0 ? 'p-r' : p.qty <= state.settings.lowStock ? 'p-o' : 'p-g'}">${p.qty}</span></td>
+    <td class="num">${money(p.cost)}</td><td class="num"><b>${money(p.price)}</b></td><td>${p.date || ''}</td><td>${thumb(p.img)}</td>
+    <td><div class="rowact"><button class="btn sm teal" onclick="openRestock('${p.id}')">+ Stock</button><button class="btn sm orange" onclick="qrProduct('${p.id}')">QR</button><button class="btn sm ghost" onclick="openProduct('${p.id}')">Edit</button><button class="btn sm red" onclick="delProduct('${p.id}')">✕</button></div></td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+function qrProduct(id) { const p = state.products.find(x => x.id === id); openQR('SKU:' + p.sku + '|' + p.name.replace(/\|/g, '/') + '|' + p.price, p.name, p.sku + ' · ' + money(p.price)); }
+function nextSku() { const n = state.products.length + 1; let s; let i = n; do { s = 'PS-' + String(i++).padStart(4, '0'); } while (state.products.some(p => p.sku === s)); return s; }
+function openProduct(id) {
+  const p = id ? state.products.find(x => x.id === id) : null;
+  openModal(`<h3>${p ? 'Edit item' : 'Add new item'}</h3><div class="f">
+    <div class="full"><label>Item name</label><input id="p_name" value="${esc(p?.name)}" placeholder="e.g. iPhone 13 clear case"></div>
+    <div><label>Category</label><input id="p_cat" list="catlist" value="${esc(p?.category)}" placeholder="Choose or type"><datalist id="catlist">${CATS.map(c => `<option>${c}</option>`).join('')}</datalist></div>
+    <div><label>Item code (SKU)</label><input id="p_sku" value="${esc(p?.sku || nextSku())}"></div>
+    <div><label>Quantity</label><input id="p_qty" type="number" min="0" step="1" value="${p ? p.qty : ''}" oninput="calcP()"></div>
+    <div><label>Date</label><input id="p_date" type="date" value="${p?.date || todayStr()}"></div>
+    <div><label>Cost price (each)</label><input id="p_cost" type="number" min="0" step="0.01" value="${p ? p.cost : ''}" oninput="calcP()"></div>
+    <div><label>Selling price (each)</label><input id="p_price" type="number" min="0" step="0.01" value="${p ? p.price : ''}"></div>
+    ${billField(p?.img)}
+    ${p ? '' : `${payBlock('p', 'stock')}<div class="total"><span>Purchase total</span><span id="p_tot">${money(0)}</span></div>`}
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveProduct('${id || ''}')">Save item</button></div>`);
+}
+function calcP() { const t = $('#p_tot'); if (t) t.textContent = money((+val('p_qty') || 0) * (+val('p_cost') || 0)); }
+async function saveProduct(id) {
+  const name = val('p_name').trim(); if (!name) return toast('Please enter the item name');
+  const qty = Math.max(0, parseInt(val('p_qty')) || 0), cost = +val('p_cost') || 0, price = +val('p_price') || 0, date = val('p_date') || todayStr();
+  const sku = val('p_sku').trim() || nextSku(), category = val('p_cat').trim();
+  if (state.products.some(x => x.sku === sku && x.id !== id)) return toast('That item code is already used');
+  const pay = $('#p_pay') ? val('p_pay') : 'cash', party = $('#p_party') ? val('p_party').trim() : '';
+  if (pay === 'credit' && !party) return toast('Enter the supplier name');
+  let p = id ? state.products.find(x => x.id === id) : null;
+  if (p) {
+    const old = p.img; const img = await takeBill(old);
+    Object.assign(p, {name, sku, category, qty, cost, price, date, img}); if (old !== img) await dropImg(old);
+  } else {
+    const img = await takeBill(null);
+    p = {id: uid(), name, sku, category, qty, cost, price, date, img}; state.products.push(p);
+    if (qty * cost > 0) state.expenses.push({id: uid(), date, title: 'Stock: ' + name, category: 'Stock purchase', qty, unit: cost, amount: qty * cost, note: '', img, pay, party: pay === 'credit' ? party : ''});
+  }
+  await save(); closeModal(); render(); toast('Item saved');
+}
+function openRestock(id) {
+  const p = state.products.find(x => x.id === id);
+  openModal(`<h3>Add stock</h3><p style="margin:-6px 0 14px;font-weight:700;color:var(--muted)">${esc(p.name)} · now ${p.qty} in stock</p><div class="f">
+    <div><label>Quantity received</label><input id="r_qty" type="number" min="1" step="1" oninput="calcR()"></div>
+    <div><label>Date</label><input id="r_date" type="date" value="${todayStr()}"></div>
+    <div><label>Cost price (each)</label><input id="r_cost" type="number" min="0" step="0.01" value="${p.cost}" oninput="calcR()"></div>
+    <div><label>Selling price (each)</label><input id="r_price" type="number" min="0" step="0.01" value="${p.price}"></div>
+    ${billField(null)}
+    ${payBlock('r', 'stock')}
+    <div class="total"><span>Purchase total</span><span id="r_tot">${money(0)}</span></div>
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="saveRestock('${id}')">Add to stock</button></div>`);
+}
+function calcR() { $('#r_tot').textContent = money((+val('r_qty') || 0) * (+val('r_cost') || 0)); }
+async function saveRestock(id) {
+  const p = state.products.find(x => x.id === id), qty = parseInt(val('r_qty')) || 0;
+  if (qty < 1) return toast('Enter the quantity received');
+  const cost = +val('r_cost') || 0, date = val('r_date') || todayStr();
+  const pay = val('r_pay'), party = val('r_party').trim();
+  if (pay === 'credit' && !party) return toast('Enter the supplier name');
+  const img = await takeBill(null);
+  p.qty += qty; p.cost = cost; p.price = +val('r_price') || p.price; p.date = date; if (img) p.img = img;
+  if (qty * cost > 0) state.expenses.push({id: uid(), date, title: 'Stock: ' + p.name, category: 'Stock purchase', qty, unit: cost, amount: qty * cost, note: '', img, pay, party: pay === 'credit' ? party : ''});
+  await save(); closeModal(); render(); toast('Stock updated');
+}
+async function delProduct(id) {
+  const p = state.products.find(x => x.id === id);
+  if (!await askPw(`Delete “${p.name}” from stock? Past sales and expenses stay in your records.`, 'Delete')) return;
+  state.products = state.products.filter(x => x.id !== id); await save(); await dropImg(p.img); render();
+}
+
+/* ---------- income ---------- */
+function monthBar(label, countHtml) {
+  return `<div class="toolbar"><input type="search" placeholder="Search…" value="${esc(ui.q)}" oninput="ui.q=this.value;render();refocus()">
+    <input type="month" value="${ui.month}" onchange="ui.month=this.value;render()" aria-label="Month">
+    <button class="btn ghost sm" onclick="ui.month='';render()">All months</button></div>`;
+}
+function refocus() { const i = document.querySelector('.toolbar input[type=search]'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }
+function vIncome() {
+  const q = ui.q.toLowerCase();
+  const list = state.sales.filter(s => (!ui.month || s.date.startsWith(ui.month)) && (!q || (s.name + (s.note || '')).toLowerCase().includes(q))).sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  const total = sum(list, s => s.total), profit = sum(list, s => s.total - s.cost);
+  return `<div class="top"><div><h2>Income 💰</h2><p>${list.length} entries · total <b class="pos">${money(total)}</b> · profit <b class="pos">${money(profit)}</b></p></div>
+    <div class="actions"><button class="btn ghost" onclick="exportCSV('sales')">Export CSV</button><button class="btn teal" onclick="openSale()">+ New sale</button></div></div>
+  ${monthBar()}
+  ${list.length ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>Item / job</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Total</th><th>Paid by</th><th>Bill</th><th></th></tr></thead><tbody>
+  ${list.map(s => `<tr><td>${s.date}</td><td><span class="pill ${s.type === 'sale' ? 'p-b' : s.type === 'repair' ? 'p-p' : 'p-o'}">${s.type === 'sale' ? 'Accessory' : s.type === 'repair' ? 'Repair' : 'Other'}</span></td>
+  <td><b>${esc(s.name)}</b>${s.party ? `<br><span class="pill p-v">${esc(s.party)}</span>` : ''}${s.note ? `<br><span style="color:var(--muted);font-size:12.5px">${esc(s.note)}</span>` : ''}</td><td class="num">${s.type === 'sale' || s.qty > 1 ? s.qty : '—'}</td><td class="num">${money(s.unit)}</td><td class="num pos"><b>${money(s.total)}</b></td><td>${payPill(s, s.total)}</td><td>${thumb(s.img)}</td>
+  <td><div class="rowact"><button class="btn sm orange" onclick="openQR('RECEIPT|${s.id}|${s.date}|${s.total}','Receipt','${s.date} · ${money(s.total)}')">QR</button><button class="btn sm red" onclick="delSale('${s.id}')">✕</button></div></td></tr>`).join('')}
+  </tbody></table></div>` : `<div class="tablewrap"><div class="empty"><div class="big">💰</div>No income recorded for this view. Add a sale or a repair job.</div></div>`}`;
+}
+function openSale() {
+  const inStock = state.products.filter(p => p.qty > 0);
+  openModal(`<h3>Record income</h3><div class="f">
+    <div><label>Type</label><select id="s_type" onchange="saleType()"><option value="sale">Accessory sale</option><option value="repair">Repair service</option><option value="other">Other income</option></select></div>
+    <div><label>Date</label><input id="s_date" type="date" value="${todayStr()}"></div>
+    <div class="full" id="s_prodwrap"><label>Item</label><select id="s_prod" onchange="saleFill()"><option value="">Choose an item…</option>${inStock.map(p => `<option value="${p.id}">${esc(p.name)} (${p.qty} left)</option>`).join('')}</select></div>
+    <div class="full" id="s_namewrap" style="display:none"><label>Job description</label><input id="s_name" placeholder="e.g. Screen replacement – Samsung A12"></div>
+    <div id="s_qtywrap"><label>Quantity</label><input id="s_qty" type="number" min="1" step="1" value="1" oninput="saleCalc()"></div>
+    <div id="s_unitwrap"><label id="s_unitlbl">Price (each)</label><input id="s_unit" type="number" min="0" step="0.01" oninput="saleCalc()"></div>
+    <div class="full" id="s_costwrap" style="display:none"><label>Your cost (parts) – optional</label><input id="s_cost" type="number" min="0" step="0.01" value="0"></div>
+    ${payBlock('s', 'sale')}<div class="full"><label>Customer / note</label><input id="s_note" placeholder="Optional"></div>
+    ${billField(null)}
+    <div class="total"><span>Total</span><span id="s_tot">${money(0)}</span></div>
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="saveSale()">Save income</button></div>`);
+}
+function saleType() {
+  const t = val('s_type'), isSale = t === 'sale';
+  $('#s_prodwrap').style.display = isSale ? '' : 'none'; $('#s_namewrap').style.display = isSale ? 'none' : ''; $('#s_costwrap').style.display = isSale ? 'none' : '';
+  $('#s_qtywrap').style.display = isSale ? '' : 'none'; $('#s_unitwrap').classList.toggle('full', !isSale);
+  $('#s_unitlbl').textContent = isSale ? 'Price (each)' : 'Amount';
+  if (!isSale) $('#s_qty').value = 1;
+  saleCalc();
+}
+function saleFill() { const p = state.products.find(x => x.id === val('s_prod')); if (p) { $('#s_unit').value = p.price; saleCalc(); } }
+function saleCalc() { $('#s_tot').textContent = money((+val('s_qty') || 0) * (+val('s_unit') || 0)); }
+async function saveSale() {
+  const type = val('s_type'), qty = parseInt(val('s_qty')) || 0, unit = +val('s_unit') || 0, date = val('s_date') || todayStr();
+  if (qty < 1) return toast('Quantity must be at least 1');
+  if (!(unit > 0)) return toast('Enter the price');
+  const pay = val('s_pay'), party = val('s_party').trim();
+  if (pay === 'credit' && !party) return toast('Enter the customer name for a credit sale');
+  let name, cost = 0, productId = null;
+  if (type === 'sale') {
+    const p = state.products.find(x => x.id === val('s_prod')); if (!p) return toast('Choose an item');
+    if (qty > p.qty) return toast(`Only ${p.qty} in stock`);
+    p.qty -= qty; name = p.name; cost = p.cost * qty; productId = p.id;
+  } else {
+    name = val('s_name').trim(); if (!name) return toast('Describe the job');
+    cost = (+val('s_cost') || 0) * qty;
+  }
+  const img = await takeBill(null);
+  state.sales.push({id: uid(), date, type, productId, name, qty, unit, total: qty * unit, cost, note: val('s_note').trim(), img, pay, party: pay === 'credit' ? party : ''});
+  await save(); closeModal(); render(); toast('Income saved');
+}
+async function delSale(id) {
+  const s = state.sales.find(x => x.id === id);
+  if (!await askPw('Delete this income entry?' + (s.productId ? ' The quantity goes back to stock.' : ''), 'Delete')) return;
+  if (s.productId) { const p = state.products.find(x => x.id === s.productId); if (p) p.qty += s.qty; }
+  state.sales = state.sales.filter(x => x.id !== id); state.settle = state.settle.filter(t => t.ref !== id); await save(); await dropImg(s.img); render();
+}
+
+/* ---------- expenses ---------- */
+const QTYCATS = ['Stock purchase', 'Spare parts', 'Tools'];
+const ECATS = ['Stock purchase', 'Rent', 'Electricity', 'Water', 'Internet', 'Salary', 'Transport', 'Tools', 'Spare parts', 'Advertising', 'Other'];
+function vExpense() {
+  const q = ui.q.toLowerCase();
+  const list = state.expenses.filter(e => (!ui.month || e.date.startsWith(ui.month)) && (!q || (e.title + e.category + (e.note || '')).toLowerCase().includes(q))).sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  return `<div class="top"><div><h2>Expenses 🧾</h2><p>${list.length} entries · total <b class="neg">${money(sum(list, e => e.amount))}</b></p></div>
+    <div class="actions"><button class="btn ghost" onclick="exportCSV('expenses')">Export CSV</button><button class="btn pink" onclick="openExpense()">+ Add expense</button></div></div>
+  ${monthBar()}
+  ${list.length ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>What for</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Total</th><th>Paid from</th><th>Bill</th><th></th></tr></thead><tbody>
+  ${list.map(e => `<tr><td>${e.date}</td><td><b>${esc(e.title)}</b>${e.party ? `<br><span class="pill p-v">${esc(e.party)}</span>` : ''}${e.note ? `<br><span style="color:var(--muted);font-size:12.5px">${esc(e.note)}</span>` : ''}</td><td><span class="pill ${catColor(e.category)}">${esc(e.category)}</span></td>
+  <td class="num">${QTYCATS.includes(e.category) || e.qty > 1 ? e.qty : '—'}</td><td class="num">${money(e.unit)}</td><td class="num neg"><b>${money(e.amount)}</b></td><td>${payPill(e, e.amount)}</td><td>${thumb(e.img)}</td>
+  <td><div class="rowact"><button class="btn sm orange" onclick="openQR('EXPENSE|${e.id}|${e.date}|${e.amount}','Expense record','${e.date} · ${money(e.amount)}')">QR</button><button class="btn sm red" onclick="delExpense('${e.id}')">✕</button></div></td></tr>`).join('')}
+  </tbody></table></div>` : `<div class="tablewrap"><div class="empty"><div class="big">🧾</div>No expenses for this view. Record rent, bills, parts or anything you pay for.</div></div>`}`;
+}
+function openExpense() {
+  openModal(`<h3>Add expense</h3><div class="f">
+    <div class="full"><label>What did you pay for?</label><input id="e_title" placeholder="e.g. Shop rent, LCD screens, tea for staff"></div>
+    <div><label>Category</label><select id="e_cat" onchange="expCat()">${ECATS.map(c => `<option>${c}</option>`).join('')}</select></div>
+    <div><label>Date</label><input id="e_date" type="date" value="${todayStr()}"></div>
+    <div id="e_qtywrap"><label>Quantity</label><input id="e_qty" type="number" min="1" step="1" value="1" oninput="expCalc()"></div>
+    <div id="e_unitwrap"><label id="e_unitlbl">Price (each)</label><input id="e_unit" type="number" min="0" step="0.01" oninput="expCalc()"></div>
+    ${payBlock('e', 'exp')}<div class="full"><label>Note</label><input id="e_note" placeholder="Optional"></div>
+    ${billField(null)}
+    <div class="total"><span>Total</span><span id="e_tot">${money(0)}</span></div>
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn pink" onclick="saveExpense()">Save expense</button></div>`);
+}
+function expCat() {
+  const q = QTYCATS.includes(val('e_cat'));
+  $('#e_qtywrap').style.display = q ? '' : 'none'; $('#e_unitwrap').classList.toggle('full', !q);
+  $('#e_unitlbl').textContent = q ? 'Price (each)' : 'Amount';
+  if (!q) $('#e_qty').value = 1;
+  expCalc();
+}
+function expCalc() { $('#e_tot').textContent = money((+val('e_qty') || 0) * (+val('e_unit') || 0)); }
+async function saveExpense() {
+  const title = val('e_title').trim(), qty = parseInt(val('e_qty')) || 0, unit = +val('e_unit') || 0;
+  if (!title) return toast('Say what you paid for'); if (qty < 1 || !(unit > 0)) return toast('Enter quantity and price');
+  const pay = val('e_pay'), party = val('e_party').trim();
+  if (pay === 'credit' && !party) return toast('Enter the supplier name');
+  const img = await takeBill(null);
+  state.expenses.push({id: uid(), date: val('e_date') || todayStr(), title, category: val('e_cat'), qty, unit, amount: qty * unit, note: val('e_note').trim(), img, pay, party: pay === 'credit' ? party : ''});
+  await save(); closeModal(); render(); toast('Expense saved');
+}
+async function delExpense(id) {
+  const e = state.expenses.find(x => x.id === id); if (!await askPw('Delete this expense?', 'Delete')) return;
+  state.expenses = state.expenses.filter(x => x.id !== id); state.settle = state.settle.filter(t => t.ref !== id); await save(); await dropImg(e.img); render();
+}
+
+/* ---------- receivable / payable ---------- */
+function vDues(kind) {
+  const R = kind === 'receipt', src = recvPayList(R);
+  const items = src.filter(x => x.pay === 'credit').map(x => { const total = R ? x.total : x.amount, paid = settledFor(x.id); return {x, total, paid, due: total - paid, title: R ? x.name : x.title}; })
+    .sort((a, b) => b.x.date.localeCompare(a.x.date));
+  const open = items.filter(i => i.due > 0.004), owed = sum(open, i => i.due), byParty = {};
+  open.forEach(i => { const k = i.x.party || '—'; byParty[k] = (byParty[k] || 0) + i.due; });
+  const hist = state.settle.filter(t => t.kind === kind).sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  const cls = ['s1', 's2', 's3', 's4', 's5', 's6'];
+  return `<div class="top"><div><h2>${R ? 'Receivable 🤝' : 'Payable 📒'}</h2><p>${R ? 'Customers who still owe you' : 'Suppliers you still need to pay'}: <b class="${R ? 'pos' : 'neg'}">${money(owed)}</b></p></div>
+    <div class="actions"><button class="btn ${R ? 'teal' : 'pink'}" onclick="${R ? 'openSale()' : 'openExpense()'}">${R ? '+ Sale on credit' : '+ Bill to pay later'}</button></div></div>
+  ${Object.keys(byParty).length ? `<div class="cards">${Object.entries(byParty).sort((a, b) => b[1] - a[1]).map(([k, v], i) => `<div class="stat ${cls[i % 6]}" style="min-height:92px"><div class="lb" style="margin-top:0">${esc(k)}</div><div class="v">${money(v)}</div></div>`).join('')}</div>` : ''}
+  ${items.length ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>${R ? 'Customer' : 'Supplier'}</th><th>For</th><th class="num">Total</th><th class="num">${R ? 'Received' : 'Paid'}</th><th class="num">Balance</th><th></th></tr></thead><tbody>
+  ${items.map(i => `<tr><td>${i.x.date}</td><td><b>${esc(i.x.party || '—')}</b></td><td>${esc(i.title)}</td><td class="num">${money(i.total)}</td><td class="num">${money(i.paid)}</td>
+  <td class="num">${i.due > 0.004 ? `<span class="pill p-o">${money(i.due)}</span>` : `<span class="pill p-g">Settled</span>`}</td>
+  <td><div class="rowact">${i.due > 0.004 ? `<button class="btn sm ${R ? 'teal' : 'pink'}" onclick="openSettle('${kind}','${i.x.id}')">${R ? 'Receive payment' : 'Pay now'}</button>` : ''}</div></td></tr>`).join('')}
+  </tbody></table></div>` : `<div class="tablewrap"><div class="empty"><div class="big">${R ? '🤝' : '📒'}</div>${R ? 'No credit sales yet. When you sell on credit, choose “On credit” under “Money received in”.' : 'No unpaid bills. When you buy on credit, choose “On credit” under “Paid from”.'}</div></div>`}
+  ${hist.length ? `<div class="panel" style="margin-top:18px"><h3>${R ? '📥 Payments received' : '📤 Payments made'}</h3><div class="list">${hist.map(t => `<div class="item"><div class="dot" style="background:${R ? '#d9f8ec' : '#ffe0ef'}">${R ? '📥' : '📤'}</div><div class="meta"><b>${esc(t.party || '—')}</b><span>${t.date} · ${PAYL[t.method] || 'Cash in hand'}${t.note ? ' · ' + esc(t.note) : ''}</span></div><div class="amt ${R ? 'pos' : 'neg'}">${money(t.amount)}</div><button class="btn sm red" onclick="delSettle('${t.id}')">✕</button></div>`).join('')}</div></div>` : ''}`;
+}
+function openSettle(kind, ref) {
+  const R = kind === 'receipt', x = recvPayList(R).find(a => a.id === ref); if (!x) return;
+  const due = (R ? x.total : x.amount) - settledFor(ref);
+  openModal(`<h3>${R ? 'Receive payment' : 'Pay supplier'}</h3><p style="margin:-6px 0 14px;font-weight:700;color:var(--muted)">${esc(x.party || '')} · ${esc(R ? x.name : x.title)} · balance ${money(due)}</p><div class="f">
+    <div><label>Amount</label><input id="t_amt" type="number" min="0" step="0.01" value="${due.toFixed(2)}"></div>
+    <div><label>Date</label><input id="t_date" type="date" value="${todayStr()}"></div>
+    <div><label>${R ? 'Received into' : 'Paid from'}</label><select id="t_m"><option value="cash">Cash in hand</option>${R ? '' : '<option value="petty">Petty cash</option>'}<option value="bank">Bank</option></select></div>
+    <div><label>Note</label><input id="t_note" placeholder="Optional"></div>
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn ${R ? 'teal' : 'pink'}" onclick="saveSettle('${kind}','${ref}')">Save</button></div>`);
+}
+async function saveSettle(kind, ref) {
+  const R = kind === 'receipt', x = recvPayList(R).find(a => a.id === ref);
+  const due = (R ? x.total : x.amount) - settledFor(ref), amt = +val('t_amt') || 0;
+  if (!(amt > 0)) return toast('Enter the amount');
+  if (amt > due + 0.005) return toast('That is more than the balance (' + money(due) + ')');
+  state.settle.push({id: uid(), kind, ref, party: x.party || '', date: val('t_date') || todayStr(), amount: amt, method: val('t_m'), note: val('t_note').trim()});
+  await save(); closeModal(); render(); toast(R ? 'Payment received' : 'Payment made');
+}
+async function delSettle(id) { if (!await askPw('Delete this payment? The balance will be owed again.', 'Delete')) return; state.settle = state.settle.filter(t => t.id !== id); await save(); render(); }
+
+/* ---------- accounts: trial balance, reports, journal, ledger ---------- */
+function vAccounts() {
+  const T = ui.acTab, to = ui.month ? ui.month + '-31' : '', from = ui.month ? ui.month + '-01' : '';
+  const tabs = [['tb', 'Trial balance'], ['rep', 'Profit & balance sheet'], ['jr', 'Journal'], ['gl', 'Ledger']];
+  const body = T === 'tb' ? tbHtml(to) : T === 'rep' ? repHtml(from, to) : T === 'jr' ? jrHtml(from, to) : glHtml(from, to);
+  return `<div class="top"><div><h2>Accounts 📚</h2><p>Every sale, expense and payment is posted as a debit and a credit.</p></div>
+    <div class="actions"><button class="btn teal" onclick="openMoney()">⇄ Money movement</button><button class="btn" onclick="openJournal()">+ Journal entry</button></div></div>
+  <div class="tabs">${tabs.map(([k, l]) => `<button class="${T === k ? 'on' : ''}" onclick="ui.acTab='${k}';render()">${l}</button>`).join('')}</div>
+  <div class="toolbar"><input type="month" value="${ui.month}" onchange="ui.month=this.value;render()" aria-label="Month"><button class="btn ghost sm" onclick="ui.month='';render()">All time</button>
+  ${T === 'gl' ? `<select onchange="ui.acct=this.value;render()">${accounts().map(a => `<option value="${esc(a.id)}" ${ui.acct === a.id ? 'selected' : ''}>${a.code} · ${esc(a.name)}</option>`).join('')}</select><button class="btn ghost sm" onclick="renameAcct(ui.acct)">✎ Rename ledger</button>` : ''}</div>
+  ${body}`;
+}
+function tbHtml(to) {
+  const B = balances(to); let dr = 0, cr = 0;
+  const rows = accounts().filter(a => B[a.id] || FIXED.includes(a)).map(a => {
+    const x = B[a.id] || {dr: 0, cr: 0}, net = x.dr - x.cr, d = net > 0 ? net : 0, c = net < 0 ? -net : 0; dr += d; cr += c;
+    return `<tr><td>${a.code}</td><td><b>${esc(a.name)}</b>${(FIXED.includes(a) || String(a.id).startsWith('c:')) ? ` <a href="#" onclick="renameAcct('${a.id}');return false" title="Rename" style="text-decoration:none">✎</a>` : ''}</td><td><span class="pill ${TYPEPILL[a.type]}">${TYPENAME[a.type]}</span></td><td class="num">${d ? money(d) : ''}</td><td class="num">${c ? money(c) : ''}</td></tr>`;
+  }).join('');
+  const okB = Math.abs(dr - cr) < 0.005;
+  return `<div class="tablewrap"><table><thead><tr><th>Code</th><th>Account</th><th>Type</th><th class="num">Debit</th><th class="num">Credit</th></tr></thead><tbody>${rows}
+  <tr><td></td><td><b>Total</b></td><td></td><td class="num"><b>${money(dr)}</b></td><td class="num"><b>${money(cr)}</b></td></tr></tbody></table></div>
+  <div class="${okB ? 'ok' : 'bad'}">${okB ? '✅ Debits equal credits. Your books balance.' : '⚠️ Debits and credits differ by ' + money(Math.abs(dr - cr))}</div>`;
+}
+function repHtml(from, to) {
+  const acc = accounts(), A = id => acctById(id), Bp = balances(to, from), Bc = balances(to);
+  const row = (l, v, cls = '', ind = false) => `<div class="item"><div class="meta"><b style="${ind ? 'padding-left:14px;font-weight:700' : ''}">${l}</b></div><div class="amt ${cls}">${money(v)}</div></div>`;
+  const incA = acc.filter(a => a.type === 'income'), expA = acc.filter(a => a.type === 'expense' && a.id !== 'cogs' && a.id !== 'rcogs');
+  const inc = sum(incA, a => bal(Bp, a)), cogs = bal(Bp, A('cogs')) + bal(Bp, A('rcogs')), gross = inc - cogs, opex = sum(expA, a => bal(Bp, a)), net = gross - opex;
+  const earn = sum(incA, a => bal(Bc, a)) - sum(acc.filter(a => a.type === 'expense'), a => bal(Bc, a));
+  const petty = bal(Bc, A('petty')), cash = bal(Bc, A('cash')), bank = bal(Bc, A('bank')), ar = bal(Bc, A('ar')), inv = bal(Bc, A('inventory')), ap = bal(Bc, A('ap'));
+  const cap = bal(Bc, A('capital')), dw = bal(Bc, A('drawings'));
+  const cu = acc.filter(a => String(a.id).startsWith('c:')), cAs = sum(cu.filter(a => a.type === 'asset'), a => bal(Bc, a)), cLi = sum(cu.filter(a => a.type === 'liability'), a => bal(Bc, a)), cEq = sum(cu.filter(a => a.type === 'equity'), a => bal(Bc, a));
+  const assets = cash + petty + bank + ar + inv + cAs, eq = cap - dw + earn + cEq, okB = Math.abs(assets - (ap + cLi + eq)) < 0.005;
+  return `<div class="grid2" style="grid-template-columns:1fr 1fr">
+  <div class="panel"><h3>📈 Profit &amp; loss ${ui.month ? '· ' + ui.month : '· all time'}</h3><div class="list">
+    <div class="sec">Income</div>${incA.filter(a => bal(Bp, a)).map(a => row(esc(a.name), bal(Bp, a), 'pos', true)).join('')}${row('Total income', inc, 'pos')}
+    <div class="sec">Cost of goods sold</div>${row('Cost of items sold', cogs, 'neg', true)}${row('Gross profit', gross)}
+    <div class="sec">Expenses</div>${expA.filter(a => bal(Bp, a)).map(a => row(esc(a.name), bal(Bp, a), 'neg', true)).join('')}${row('Total expenses', opex, 'neg')}
+    <div class="sec">Result</div>${row('Reload margin (included above)', bal(Bp, A('rsales')) - bal(Bp, A('rcogs')), 'pos', true)}${row(net >= 0 ? 'Net profit' : 'Net loss', net, net >= 0 ? 'pos' : 'neg')}</div></div>
+  <div class="panel"><h3>⚖️ Balance sheet ${ui.month ? '· to ' + ui.month : '· today'}</h3><div class="list">
+    <div class="sec">Assets</div>${row(esc(A('cash').name), cash, '', true)}${row(esc(A('petty').name), petty, '', true)}${row(esc(A('bank').name), bank, '', true)}${row('Receivable (customers owe you)', ar, '', true)}${row('Inventory', inv, '', true)}${cAs ? row('Other assets', cAs, '', true) : ''}${row('Total assets', assets, 'pos')}
+    <div class="sec">Liabilities</div>${row('Payable (you owe suppliers)', ap, 'neg', true)}${cLi ? row('Other liabilities', cLi, 'neg', true) : ''}
+    <div class="sec">Owner's equity</div>${row(esc(A('capital').name), cap, '', true)}${row('Less: drawings', -dw, '', true)}${row('Profit to date', earn, '', true)}${cEq ? row('Other equity', cEq, '', true) : ''}${row('Total equity', eq)}
+    <div class="sec">Check</div>${row('Liabilities + equity', ap + cLi + eq)}</div>
+    <div class="${okB ? 'ok' : 'bad'}">${okB ? '✅ Assets equal liabilities plus equity.' : '⚠️ Balance sheet does not balance.'}</div></div></div>`;
+}
+function jrHtml(from, to) {
+  const J = buildJournal().filter(j => (!from || j.date >= from) && (!to || j.date <= to)).reverse();
+  if (!J.length) return `<div class="tablewrap"><div class="empty"><div class="big">📚</div>No journal entries for this period.</div></div>`;
+  return J.map(j => `<div class="jcard"><div class="jh"><b>${j.date}</b><span class="memo">${esc(j.memo)}</span><span class="pill ${SRC[j.src][1]}">${SRC[j.src][0]}</span>
+    ${j.src === 'manual' ? `<button class="btn sm red" onclick="delJournal('${j.ref}')">✕</button>` : j.src === 'receipt' || j.src === 'payment' ? `<button class="btn sm red" onclick="delSettle('${j.ref}')">✕</button>` : ''}</div>
+    <table><tbody>${j.lines.map(l => `<tr><td class="${l.cr ? 'ind' : ''}">${esc(acctById(l.a).name)}</td><td class="num">${l.dr ? money(l.dr) : ''}</td><td class="num">${l.cr ? money(l.cr) : ''}</td></tr>`).join('')}</tbody></table></div>`).join('');
+}
+function glHtml(from, to) {
+  const a = acctById(ui.acct); let run = 0, bf = 0; const rows = [];
+  buildJournal().forEach(j => {
+    if (to && j.date > to) return;
+    j.lines.forEach(l => { if (l.a !== a.id) return; run += isDebitNormal(a.type) ? l.dr - l.cr : l.cr - l.dr; if (!from || j.date >= from) rows.push({j, l, run}); else bf = run; });
+  });
+  return `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Description</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th></tr></thead><tbody>
+  ${from ? `<tr><td></td><td><i>Brought forward</i></td><td></td><td></td><td class="num">${money(bf)}</td></tr>` : ''}
+  ${rows.map(r => `<tr><td>${r.j.date}</td><td>${esc(r.j.memo)}</td><td class="num">${r.l.dr ? money(r.l.dr) : ''}</td><td class="num">${r.l.cr ? money(r.l.cr) : ''}</td><td class="num"><b>${money(r.run)}</b></td></tr>`).join('')}
+  </tbody></table>${rows.length || from ? '' : '<div class="empty">No entries in this account yet.</div>'}</div>`;
+}
+const MOVES = {
+  dep: ['Deposit cash into bank', 'bank', 'cash'], wd: ['Withdraw cash from bank into cash in hand', 'cash', 'bank'],
+  pet: ['Top up petty cash from cash in hand', 'petty', 'cash'], petr: ['Return petty cash to cash in hand', 'cash', 'petty'], petb: ['Top up petty cash from bank', 'petty', 'bank'],
+  capc: ['Owner adds cash to the shop', 'cash', 'capital'], capb: ['Owner adds money to the bank', 'bank', 'capital'],
+  drc: ['Owner takes cash out', 'drawings', 'cash'], drb: ['Owner takes money from the bank', 'drawings', 'bank']
+};
+function openMoney() {
+  openModal(`<h3>Money movement</h3><div class="f">
+    <div class="full"><label>What happened?</label><select id="m_type">${Object.entries(MOVES).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div>
+    <div><label>Amount</label><input id="m_amt" type="number" min="0" step="0.01"></div>
+    <div><label>Date</label><input id="m_date" type="date" value="${todayStr()}"></div>
+    <div class="full"><label>Note</label><input id="m_note" placeholder="Optional"></div>
+  </div><div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="saveMoney()">Save</button></div>`);
+}
+async function saveMoney() {
+  const m = MOVES[val('m_type')], amt = +val('m_amt') || 0; if (!(amt > 0)) return toast('Enter the amount');
+  state.journal.push({id: uid(), date: val('m_date') || todayStr(), memo: m[0] + (val('m_note').trim() ? ' – ' + val('m_note').trim() : ''), lines: [{a: m[1], dr: amt, cr: 0}, {a: m[2], dr: 0, cr: amt}]});
+  await save(); closeModal(); render(); toast('Saved');
+}
+function openJournal() {
+  openModal(`<h3>Journal entry</h3><div class="f"><div><label>Date</label><input id="j_date" type="date" value="${todayStr()}"></div><div><label>Memo</label><input id="j_memo" placeholder="What is this for?"></div></div>
+    <div style="margin-top:14px"><div class="jrow" style="font-weight:800;font-size:13px;color:#5b3fc4"><span>Ledger</span><span>Debit</span><span>Credit</span><span></span></div><div id="jl"></div></div>
+    <button class="btn ghost sm" onclick="jAdd()">+ Add line</button>
+    <div style="margin-top:12px;padding:12px;border-radius:14px;background:#faf7ff;border:2px dashed #cdbdff"><label>Need a new ledger? Type its name</label><div style="display:grid;grid-template-columns:1fr 120px auto;gap:8px"><input id="jn_name" placeholder="e.g. Loan from friend" style="padding:10px;border-radius:12px;border:2px solid var(--line)"><select id="jn_type" style="padding:10px;border-radius:12px;border:2px solid var(--line)"><option value="asset">Asset</option><option value="liability">Liability</option><option value="equity">Equity</option><option value="income">Income</option><option value="expense">Expense</option></select><button class="btn sm teal" onclick="jNew()">Add</button></div><p style="margin-top:6px;font-size:12.5px;color:var(--muted);font-weight:700">Tip: press ✎ beside a ledger to rename it.</p></div><div class="sumrow"><span id="jtot">Debit 0.00 · Credit 0.00</span><span id="jok"></span></div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveJournal()">Post entry</button></div>`);
+  jAdd(); jAdd();
+}
+function jAdd() {
+  const r = document.createElement('div'); r.className = 'jrow';
+  r.innerHTML = `<select>${jOpts()}</select><input type="number" min="0" step="0.01" placeholder="Debit" oninput="jCalc()"><input type="number" min="0" step="0.01" placeholder="Credit" oninput="jCalc()"><button class="btn sm ghost" type="button" title="Rename this ledger" onclick="jRename(this)">✎</button>`;
+  $('#jl').appendChild(r);
+}
+function jLines() { return [...document.querySelectorAll('#jl .jrow')].map(r => { const [s, d, c] = r.querySelectorAll('select,input'); return {a: s.value, dr: +d.value || 0, cr: +c.value || 0}; }).filter(l => l.dr || l.cr); }
+function jCalc() { const L = jLines(), D = sum(L, l => l.dr), C = sum(L, l => l.cr); $('#jtot').textContent = `Debit ${money(D)} · Credit ${money(C)}`; $('#jok').textContent = Math.abs(D - C) < 0.005 && D > 0 ? '✅ Balanced' : 'Difference ' + money(Math.abs(D - C)); }
+async function saveJournal() {
+  const lines = jLines(); if (lines.length < 2) return toast('Add at least two lines');
+  if (lines.some(l => l.dr && l.cr)) return toast('A line cannot have both debit and credit');
+  if (Math.abs(sum(lines, l => l.dr) - sum(lines, l => l.cr)) > 0.004) return toast('Debits and credits must be equal');
+  state.journal.push({id: uid(), date: val('j_date') || todayStr(), memo: val('j_memo').trim() || 'Journal entry', lines});
+  await save(); closeModal(); render(); toast('Entry posted');
+}
+async function delJournal(id) { if (!await askPw('Delete this journal entry?', 'Delete')) return; state.journal = state.journal.filter(j => j.id !== id); await save(); render(); }
+
+/* ---------- inspiring quotes ---------- */
+const QUOTES = [
+  ["Small steps every day lead to big results.", ""],
+  ["Start where you are. Use what you have. Do what you can.", "Arthur Ashe"],
+  ["Well done is better than well said.", "Benjamin Franklin"],
+  ["Slow and steady wins the race.", "Aesop"],
+  ["A journey of a thousand miles begins with a single step.", "Lao Tzu"],
+  ["Fall seven times, stand up eight.", "Japanese proverb"],
+  ["Don't watch the clock. Do what it does. Keep going.", "Sam Levenson"],
+  ["Little by little, one travels far.", "J.R.R. Tolkien"],
+  ["A happy customer comes back again.", ""],
+  ["Every sale starts with a smile.", ""],
+  ["Work hard today. Enjoy the result tomorrow.", ""],
+  ["Believe in yourself and keep going.", ""],
+  ["Honest work, fair price, happy customers.", ""],
+  ["Good things take time. Be patient.", ""],
+  ["Today's small work builds tomorrow's big shop.", ""],
+  ["Never give up. You are getting closer every day.", ""],
+  ["Save a little money every day.", ""],
+  ["Keep your shop clean and your promises clear.", ""],
+  ["Make one customer happy today.", ""],
+  ["Success is the sum of small efforts, repeated day in and day out.", "Robert Collier"]
+];
+let qOrder = [], qPos = 0;
+function shuffleQuotes() {
+  qOrder = QUOTES.map((_, i) => i);
+  for (let i = qOrder.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [qOrder[i], qOrder[j]] = [qOrder[j], qOrder[i]]; }
+  qPos = 0;
+}
+shuffleQuotes();
+const curQuote = () => QUOTES[qOrder[qPos]];
+function quoteCard() {
+  const [t, a] = curQuote();
+  return `<div class="quote"><div class="qmark" aria-hidden="true">\u201C</div><div class="qbody"><div class="qtext" id="qText">${esc(t)}</div><div class="qauth" id="qAuth">${a ? '\u2014 ' + esc(a) : ''}</div></div>
+    <button class="qnext" onclick="nextQuote()" aria-label="Show another quote" title="Another quote">\u21BB</button></div>`;
+}
+function nextQuote() {
+  qPos++;
+  if (qPos >= qOrder.length) { const last = qOrder[qOrder.length - 1]; shuffleQuotes(); if (qOrder[0] === last) [qOrder[0], qOrder[1]] = [qOrder[1], qOrder[0]]; }
+  const t = $('#qText'), a = $('#qAuth'); if (!t || !a) return;
+  t.style.opacity = 0; a.style.opacity = 0;
+  setTimeout(() => {
+    const t2 = $('#qText'), a2 = $('#qAuth'); if (!t2 || !a2) return;
+    const [txt, au] = curQuote(); t2.textContent = txt; a2.textContent = au ? '\u2014 ' + au : ''; t2.style.opacity = 1; a2.style.opacity = 1;
+  }, 450);
+}
+setInterval(nextQuote, 20000);
+
+/* ---------- export everything to Excel ---------- */
+function buildSheets() {
+  const B = balances(), g = id => bal(B, acctById(id)), m = todayStr().slice(0, 7);
+  const yn = x => x ? 'Yes' : 'No';
+  const typeL = {sale: 'Accessory sale', repair: 'Repair', other: 'Other income'};
+  const due = (x, total) => (x.pay === 'credit') ? total - settledFor(x.id) : 0;
+  const byDate = (a, b) => a.date.localeCompare(b.date);
+  const sheets = [];
+  sheets.push({name: 'Summary', rows: [
+    ['Phone shop \u2013 full data export', ''], ['Shop', state.settings.shop], ['Exported on', todayStr()], ['Currency', cur()], [],
+    ['Cash in hand', g('cash')], ['Petty cash', g('petty')], ['Bank balance', g('bank')], ['Receivable (customers owe you)', g('ar')], ['Payable (you owe suppliers)', g('ap')],
+    ['Stock value (at cost)', sum(state.products, p => p.qty * p.cost)], ['Inventory in books', g('inventory')],
+    ['Income this month', sum(state.sales.filter(s => s.date.startsWith(m)), s => s.total)],
+    ['Expenses this month', sum(state.expenses.filter(e => e.date.startsWith(m)), e => e.amount)],
+    ['Items in stock list', state.products.length]
+  ]});
+  sheets.push({name: 'Stock', rows: [['Code', 'Item', 'Category', 'Qty', 'Cost price', 'Selling price', 'Stock value (cost)', 'Date added', 'Has bill photo'],
+    ...state.products.slice().sort((a, b) => a.name.localeCompare(b.name)).map(p => [p.sku, p.name, p.category || '', p.qty, p.cost, p.price, p.qty * p.cost, p.date || '', yn(p.img)])]});
+  sheets.push({name: 'Income', rows: [['Date', 'Type', 'Item / job', 'Customer', 'Qty', 'Price', 'Total', 'Cost', 'Profit', 'Paid by', 'Balance due', 'Note', 'Has bill photo'],
+    ...state.sales.slice().sort(byDate).map(s => [s.date, typeL[s.type] || s.type, s.name, s.party || '', s.qty, s.unit, s.total, s.cost || 0, s.total - (s.cost || 0), PAYL[s.pay || 'cash'], due(s, s.total), s.note || '', yn(s.img)])]});
+  sheets.push({name: 'Expenses', rows: [['Date', 'What for', 'Category', 'Supplier', 'Qty', 'Price', 'Total', 'Paid from', 'Balance due', 'Note', 'Has bill photo'],
+    ...state.expenses.slice().sort(byDate).map(e => [e.date, e.title, e.category, e.party || '', e.qty, e.unit, e.amount, PAYL[e.pay || 'cash'], due(e, e.amount), e.note || '', yn(e.img)])]});
+  sheets.push({name: 'Receivable', rows: [['Date', 'Customer', 'Item', 'Total', 'Received', 'Balance'],
+    ...recvPayList(true).filter(s => s.pay === 'credit').sort(byDate).map(s => [s.date, s.party || '', s.name, s.total, settledFor(s.id), s.total - settledFor(s.id)])]});
+  sheets.push({name: 'Payable', rows: [['Date', 'Supplier', 'For', 'Total', 'Paid', 'Balance'],
+    ...state.expenses.filter(e => e.pay === 'credit').sort(byDate).map(e => [e.date, e.party || '', e.title, e.amount, settledFor(e.id), e.amount - settledFor(e.id)])]});
+  sheets.push({name: 'Payments', rows: [['Date', 'Type', 'Name', 'Amount', 'Cash / Bank', 'Note'],
+    ...state.settle.slice().sort(byDate).map(t => [t.date, t.kind === 'receipt' ? 'Received from customer' : 'Paid to supplier', t.party || '', t.amount, PAYL[t.method] || 'Cash in hand', t.note || ''])]});
+  sheets.push({name: 'Reload sales', rows: [['Date', 'Company', 'Number', 'Customer', 'Company amount', 'Customer amount', 'Margin', 'Paid by'], ...state.rl.sells.slice().sort(byDate).map(x => [x.date, coName(x.co), x.number || '', x.party || '', x.cost, x.amount, x.amount - x.cost, PAYL[x.pay]])]});
+  sheets.push({name: 'Dealer top-ups', rows: [['Date', 'Company', 'Amount', 'Paid from', 'Note'], ...state.rl.buys.slice().sort(byDate).map(b => [b.date, coName(b.co), b.paid, PAYL[b.pay], b.note || ''])]});
+  const jr = [['Date', 'Entry', 'Source', 'Account', 'Debit', 'Credit']];
+  buildJournal().forEach(j => j.lines.forEach(l => jr.push([j.date, j.memo, SRC[j.src][0], acctById(l.a).name, l.dr || 0, l.cr || 0])));
+  sheets.push({name: 'Journal', rows: jr});
+  let dr = 0, cr = 0; const tb = [['Code', 'Account', 'Type', 'Debit', 'Credit']];
+  accounts().filter(a => B[a.id] || FIXED.includes(a)).forEach(a => { const x = B[a.id] || {dr: 0, cr: 0}, net = x.dr - x.cr, d = net > 0 ? net : 0, c = net < 0 ? -net : 0; dr += d; cr += c; tb.push([a.code, a.name, TYPENAME[a.type], d, c]); });
+  tb.push(['', 'Total', '', dr, cr]);
+  sheets.push({name: 'Trial balance', rows: tb});
+  return sheets;
+}
+const xmlEsc = v => String(v ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+function exportExcel() {
+  const sheets = buildSheets(), fname = 'phone-shop-data-' + todayStr();
+  if (typeof XLSX !== 'undefined') {
+    const wb = XLSX.utils.book_new();
+    sheets.forEach(sh => {
+      const ws = XLSX.utils.aoa_to_sheet(sh.rows);
+      ws['!cols'] = (sh.rows[0] || []).map((_, i) => ({wch: Math.min(42, Math.max(10, ...sh.rows.map(r => String(r[i] ?? '').length + 2)))}));
+      XLSX.utils.book_append_sheet(wb, ws, sh.name);
+    });
+    XLSX.writeFile(wb, fname + '.xlsx'); toast('Excel file downloaded');
+  } else {
+    const xml = '<?xml version="1.0" encoding="UTF-8"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Styles><Style ss:ID="h"><Font ss:Bold="1"/><Interior ss:Color="#E9E0FF" ss:Pattern="Solid"/></Style></Styles>' +
+      sheets.map(sh => `<Worksheet ss:Name="${xmlEsc(sh.name)}"><Table>${sh.rows.map((r, ri) => `<Row>${r.map(v => `<Cell${ri === 0 ? ' ss:StyleID="h"' : ''}><Data ss:Type="${typeof v === 'number' && isFinite(v) ? 'Number' : 'String'}">${xmlEsc(v)}</Data></Cell>`).join('')}</Row>`).join('')}</Table></Worksheet>`).join('') + '</Workbook>';
+    download(fname + '.xls', new Blob([xml], {type: 'application/vnd.ms-excel'})); toast('Saved as .xls (connect to the internet once for .xlsx)');
+  }
+}
+
+/* ---------- reload system (two amounts: company side vs customer side) ---------- */
+const coName = id => (state.rl.cos.find(c => c.id === id) || {name: '?'}).name;
+const rlBal = c => sum(state.rl.buys.filter(b => b.co === c.id), b => b.paid) - sum(state.rl.sells.filter(x => x.co === c.id), x => x.cost);
+const rlInvoice = x => ({id: x.id, date: x.date, party: x.party, name: 'Reload: ' + coName(x.co) + (x.number ? ' · ' + x.number : ''), total: x.amount, pay: 'credit'});
+const recvPayList = R => R ? [...state.sales, ...state.rl.sells.filter(x => x.pay === 'credit').map(rlInvoice)] : state.expenses;
+function vReload() {
+  const inM = d => !ui.month || d.startsWith(ui.month), byD = (a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id);
+  const sells = state.rl.sells.filter(x => inM(x.date)).sort(byD), buys = state.rl.buys.filter(b => inM(b.date)).sort(byD), cls = ['s1', 's2', 's3', 's4', 's5', 's6'];
+  return `<div class="top"><div><h2>Reload 📲</h2><p>Customers paid ${money(sum(sells, x => x.amount))} · margin earned <b class="pos">${money(sum(sells, x => x.amount - x.cost))}</b></p></div>
+    <div class="actions"><button class="btn ghost" onclick="openCompany()">+ Company</button><button class="btn orange" onclick="openRlBuy()">+ Dealer top-up</button><button class="btn teal" onclick="openRlSale()">+ Reload sale</button></div></div>
+  <div class="toolbar"><input type="month" value="${ui.month}" onchange="ui.month=this.value;render()" aria-label="Month"><button class="btn ghost sm" onclick="ui.month='';render()">All time</button></div>
+  ${state.rl.cos.length ? `<div class="cards">${state.rl.cos.map((c, i) => `<div class="stat ${cls[i % 6]}" style="min-height:100px"><div class="lb" style="margin-top:0">${esc(c.name)} balance</div><div class="v">${money(rlBal(c))}</div><div class="lb" style="font-size:12px;margin-top:2px"><a href="#" onclick="openCompany('${c.id}');return false" style="color:inherit;font-weight:800">rename</a></div></div>`).join('')}</div>`
+  : `<div class="tablewrap" style="margin-bottom:16px"><div class="empty"><div class="big">📲</div>Add your reload companies first. Press “+ Company”.</div></div>`}
+  <div class="panel"><h3>📤 Reload sales</h3>${sells.length ? `<div class="tablewrap" style="box-shadow:none"><table><thead><tr><th>Date</th><th>Company</th><th>Customer / number</th><th class="num">Company amount</th><th class="num">Customer pays</th><th class="num">Margin</th><th>Paid by</th><th></th></tr></thead><tbody>
+  ${sells.map(x => `<tr><td>${x.date}</td><td><b>${esc(coName(x.co))}</b></td><td>${esc(x.party || '')}${x.party && x.number ? '<br>' : ''}<span style="color:var(--muted)">${esc(x.number || (x.party ? '' : '—'))}</span></td><td class="num">${money(x.cost)}</td><td class="num pos"><b>${money(x.amount)}</b></td><td class="num">${money(x.amount - x.cost)}</td><td>${payPill(x, x.amount)}</td><td><div class="rowact"><button class="btn sm ghost" onclick="openRlEdit('${x.id}')">Edit</button><button class="btn sm red" onclick="delRl('sells','${x.id}')">✕</button></div></td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">No reload sales in this period.</div>'}</div>
+  <div class="panel" style="margin-top:18px"><h3>📥 Dealer top-ups</h3>${buys.length ? `<div class="tablewrap" style="box-shadow:none"><table><thead><tr><th>Date</th><th>Company</th><th class="num">Amount</th><th>Paid from</th><th>Bill</th><th></th></tr></thead><tbody>
+  ${buys.map(b => `<tr><td>${b.date}</td><td><b>${esc(coName(b.co))}</b></td><td class="num neg"><b>${money(b.paid)}</b></td><td><span class="pill ${b.pay === 'bank' ? 'p-b' : b.pay === 'owner' ? 'p-v' : 'p-g'}">${PAYL[b.pay]}</span></td><td>${thumb(b.img)}</td><td><div class="rowact"><button class="btn sm red" onclick="delRl('buys','${b.id}')">✕</button></div></td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">No top-ups in this period.</div>'}</div>`;
+}
+function openCompany(id) {
+  const c = state.rl.cos.find(x => x.id === id);
+  openModal(`<h3>${c ? 'Rename company' : 'Add reload company'}</h3><div class="f"><div class="full"><label>Company name</label><input id="c_name" value="${esc(c?.name)}"></div></div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveCompany('${id || ''}')">Save</button></div>`);
+}
+async function saveCompany(id) {
+  const name = val('c_name').trim(); if (!name) return toast('Enter the company name');
+  const c = state.rl.cos.find(x => x.id === id); if (c) c.name = name; else state.rl.cos.push({id: uid(), name, disc: 0});
+  await save(); closeModal(); render();
+}
+const coOpts = () => state.rl.cos.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+function openRlBuy() {
+  if (!state.rl.cos.length) { toast('Add a reload company first'); return openCompany(); }
+  openModal(`<h3>Dealer top-up</h3><p style="margin:-6px 0 12px;font-weight:700;color:var(--muted)">Money out, company balance in, same amount. No margin.</p><div class="f"><div><label>Company</label><select id="rb_co">${coOpts()}</select></div><div><label>Date</label><input id="rb_date" type="date" value="${todayStr()}"></div>
+    <div><label>Amount</label><input id="rb_amt" type="number" min="0" step="0.01"></div><div><label>Paid from</label><select id="rb_pay"><option value="cash">Cash in hand</option><option value="petty">Petty cash</option><option value="bank">Bank</option><option value="owner">Owner's own money</option></select></div>
+    <div class="full"><label>Note</label><input id="rb_note" placeholder="Optional"></div>${billField(null)}</div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn orange" onclick="saveRlBuy()">Save top-up</button></div>`);
+}
+async function saveRlBuy() {
+  const amt = +val('rb_amt') || 0; if (!(amt > 0)) return toast('Enter the amount');
+  const img = await takeBill(null);
+  state.rl.buys.push({id: uid(), date: val('rb_date') || todayStr(), co: val('rb_co'), face: amt, paid: amt, pay: val('rb_pay'), note: val('rb_note').trim(), img});
+  await save(); closeModal(); render(); toast('Top-up saved');
+}
+function rlMargin(p) { $('#' + p + '_m').textContent = 'Margin: ' + money((+val(p + '_amt') || 0) - (+val(p + '_cost') || 0)); }
+function openRlSale() {
+  if (!state.rl.cos.length) { toast('Add a reload company first'); return openCompany(); }
+  openModal(`<h3>Reload sale</h3><div class="f"><div><label>Company</label><select id="rs_co">${coOpts()}</select></div><div><label>Date</label><input id="rs_date" type="date" value="${todayStr()}"></div>
+    <div><label>Reload value (leaves company balance)</label><input id="rs_cost" type="number" min="0" step="0.01" oninput="rlMargin('rs')"></div>
+    <div><label>Amount customer pays / owes</label><input id="rs_amt" type="number" min="0" step="0.01" oninput="rlMargin('rs')"></div>
+    <div class="total"><span id="rs_m">Margin: ${money(0)}</span></div>
+    ${payBlock('rs', 'sale')}<div class="full"><label>Phone number</label><input id="rs_num" inputmode="tel" placeholder="Optional"></div></div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn teal" onclick="saveRlSale()">Save sale</button></div>`);
+}
+async function saveRlSale() {
+  const c = state.rl.cos.find(x => x.id === val('rs_co')), cost = +val('rs_cost') || 0, amount = +val('rs_amt') || 0, pay = val('rs_pay'), party = val('rs_party').trim();
+  if (!(cost > 0) || !(amount > 0)) return toast('Enter both amounts');
+  if (pay === 'credit' && !party) return toast('Enter the customer name for credit');
+  const left = rlBal(c); if (cost > left + 0.005) return toast(`Only ${money(left)} left in ${c.name}`);
+  state.rl.sells.push({id: uid(), date: val('rs_date') || todayStr(), co: c.id, amount, cost, number: val('rs_num').trim(), pay, party: pay === 'credit' ? party : ''});
+  await save(); closeModal(); render(); toast('Reload sale saved');
+}
+function openRlEdit(id) {
+  const x = state.rl.sells.find(a => a.id === id);
+  openModal(`<h3>Edit reload sale</h3><p style="margin:-6px 0 12px;font-weight:700;color:var(--muted)">${esc(coName(x.co))}${x.party ? ' · ' + esc(x.party) : ''}</p><div class="f"><div><label>Date</label><input id="re_date" type="date" value="${x.date}"></div><div><label>Phone number</label><input id="re_num" value="${esc(x.number)}"></div>
+    <div><label>Reload value (company)</label><input id="re_cost" type="number" min="0" step="0.01" value="${x.cost}" oninput="rlMargin('re')"></div>
+    <div><label>Customer pays / owes</label><input id="re_amt" type="number" min="0" step="0.01" value="${x.amount}" oninput="rlMargin('re')"></div>
+    <div class="total"><span id="re_m">Margin: ${money(x.amount - x.cost)}</span></div></div>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveRlEdit('${id}')">Save changes</button></div>`);
+}
+async function saveRlEdit(id) {
+  const x = state.rl.sells.find(a => a.id === id), cost = +val('re_cost') || 0, amount = +val('re_amt') || 0;
+  if (!(cost > 0) || !(amount > 0)) return toast('Enter both amounts');
+  if (x.pay === 'credit' && amount < settledFor(id) - 0.005) return toast('Customer already paid ' + money(settledFor(id)) + ', which is more than this amount');
+  const c = state.rl.cos.find(k => k.id === x.co); if (cost - x.cost > rlBal(c) + 0.005) return toast(`Only ${money(rlBal(c))} left in ${c.name}`);
+  if (!await askPw('Save changes to this reload sale?', 'Save')) return;
+  Object.assign(x, {cost, amount, date: val('re_date') || x.date, number: val('re_num').trim()});
+  await save(); closeModal(); render(); toast('Sale updated');
+}
+async function delRl(kind, id) {
+  if (!await askPw('Delete this reload entry?', 'Delete')) return;
+  state.rl[kind] = state.rl[kind].filter(x => x.id !== id); state.settle = state.settle.filter(t => t.ref !== id); await save(); render();
+}
+
+const jOpts = () => accounts().map(a => `<option value="${esc(a.id)}">${a.code} · ${esc(a.name)}</option>`).join('');
+function jRefresh() { document.querySelectorAll('#jl .jrow select').forEach(sel => { const v = sel.value; sel.innerHTML = jOpts(); sel.value = v; }); }
+async function applyRename(id, name) {
+  const f = FIXED.find(x => x.id === id), cu = state.custom.find(x => x.id === id), n = (name || '').trim();
+  if (!f && !cu) return String(id).startsWith('rl:') ? 'Rename reload companies in the Reload tab' : 'Expense ledgers are named by their expense category';
+  if (n && accounts().some(x => x.id !== id && x.name.toLowerCase() === n.toLowerCase())) return 'Another ledger already has that name';
+  if (cu) { if (!n) return 'Enter a name'; cu.name = n; }
+  else { state.names = state.names || {}; if (n && n !== f.def) state.names[id] = n; else delete state.names[id]; }
+  await save(); render(); return '';
+}
+async function jRename(btn) {
+  const sel = btn.closest('.jrow').querySelector('select'), a = acctById(sel.value);
+  const n = prompt('New name for this ledger', a.name); if (n === null) return;
+  const err = await applyRename(sel.value, n); if (err) return toast(err);
+  jRefresh(); jCalc(); toast('Ledger renamed');
+}
+async function jNew() {
+  const n = val('jn_name').trim(); if (!n) return toast('Type the new ledger name');
+  if (accounts().some(x => x.name.toLowerCase() === n.toLowerCase())) return toast('Another ledger already has that name');
+  state.custom.push({id: 'c:' + uid(), name: n, type: val('jn_type')}); await save();
+  $('#jn_name').value = ''; jRefresh(); toast('Ledger added. Pick it in any line.');
+}
+function renameAcct(id) {
+  const f = FIXED.find(x => x.id === id), cu = state.custom.find(x => x.id === id), a = f || cu;
+  if (!a) return toast(String(id).startsWith('rl:') ? 'Rename reload companies in the Reload tab' : 'Expense ledgers are named by their expense category');
+  openModal(`<h3>Rename ledger</h3><div class="f"><div class="full"><label>Ledger name</label><input id="rn_name" value="${esc(a.name)}"></div></div>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);font-weight:700">${f ? 'Original name: ' + esc(a.def) + '. ' : ''}Only the name changes. All entries stay.</p>
+    <div class="mfoot"><button class="btn ghost" onclick="closeModal()">Cancel</button>${f ? `<button class="btn ghost" onclick="saveRename('${id}',true)">Reset name</button>` : ''}<button class="btn" onclick="saveRename('${id}')">Save</button></div>`);
+}
+async function saveRename(id, reset) { const err = await applyRename(id, reset ? '' : val('rn_name')); if (err) return toast(err); closeModal(); }
+
+/* ---------- delete password ---------- */
+function askPw(msg, okLabel = 'Confirm') {
+  return new Promise(res => {
+    const o = document.createElement('div'); o.className = 'overlay'; o.style.zIndex = 80;
+    o.innerHTML = `<div class="modal" style="width:min(420px,100%)"><div class="hd"></div><h3>🔒 Password needed</h3>
+      <p style="font-weight:700;color:var(--muted);margin-bottom:12px">${esc(msg)}</p>
+      <div class="f"><div class="full"><label>Password</label><input id="pw_in" type="password" autocomplete="off" placeholder="Enter password"></div></div>
+      <div id="pw_err" class="bad" style="display:none">Wrong password. Nothing was changed.</div>
+      <div class="mfoot"><button class="btn ghost" id="pw_no">Cancel</button><button class="btn red" id="pw_ok">${esc(okLabel)}</button></div></div>`;
+    document.body.appendChild(o);
+    const inp = o.querySelector('#pw_in'); inp.focus();
+    const done = v => { o.remove(); res(v); };
+    const check = () => {
+      if (inp.value === (state.settings.delPw || 'Trust')) done(true);
+      else { o.querySelector('#pw_err').style.display = ''; inp.value = ''; inp.focus(); }
+    };
+    o.querySelector('#pw_ok').onclick = check; o.querySelector('#pw_no').onclick = () => done(false);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') check(); if (e.key === 'Escape') done(false); });
+  });
+}
+
+/* ---------- settings, export, backup ---------- */
+function openSettings() {
+  openModal(`<h3>Settings</h3><div class="f">
+    <div class="full"><label>Shop name</label><input id="st_shop" value="${esc(state.settings.shop)}"></div>
+    <div><label>Currency symbol</label><input id="st_cur" value="${esc(state.settings.currency)}" maxlength="6"></div>
+    <div><label>Low stock warning at</label><input id="st_low" type="number" min="0" value="${state.settings.lowStock}"></div>
+    <div class="full"><label>New delete password (leave blank to keep the current one)</label><input id="st_pw" type="password" autocomplete="new-password"></div>
+  </div><div class="mfoot"><button class="btn red" onclick="resetAll()">Erase all data</button><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveSettings()">Save</button></div>`);
+}
+async function saveSettings() {
+  const np = val('st_pw').trim();
+  if (np && !await askPw('Enter the current password to set a new one')) return;
+  state.settings = {shop: val('st_shop').trim() || 'Future Mobile Diyawiddagama', currency: val('st_cur').trim() || 'Rs.', lowStock: Math.max(0, parseInt(val('st_low')) || 0), delPw: np || state.settings.delPw || 'Trust'};
+  await save(); closeModal(); render();
+}
+async function resetAll() {
+  if (!await askPw('Erase ALL items, income, expenses and bill photos? This cannot be undone.', 'Erase all')) return;
+  if (!confirm('Last check: have you downloaded a backup?')) return;
+  for (const id of Object.keys(imgCache)) delete imgCache[id];
+  if (db) { await idb('img', 'readwrite', s => s.clear()); }
+  state = {products: [], sales: [], expenses: [], settle: [], journal: [], rl: {cos: [], buys: [], sells: []}, names: state.names, custom: state.custom, settings: state.settings}; await save(); closeModal(); render();
+}
+function download(name, blob) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
+const csvCell = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+function exportCSV(kind) {
+  const rows = kind === 'sales'
+    ? [['Date', 'Type', 'Item', 'Qty', 'Unit price', 'Total', 'Cost', 'Note'], ...state.sales.map(s => [s.date, s.type, s.name, s.qty, s.unit, s.total, s.cost, s.note])]
+    : [['Date', 'Title', 'Category', 'Qty', 'Unit price', 'Total', 'Note'], ...state.expenses.map(e => [e.date, e.title, e.category, e.qty, e.unit, e.amount, e.note])];
+  download(`phone-shop-${kind}-${todayStr()}.csv`, new Blob(['\ufeff' + rows.map(r => r.map(csvCell).join(',')).join('\n')], {type: 'text/csv'}));
+}
+function exportStockCSV() {
+  const rows = [['SKU', 'Name', 'Category', 'Qty', 'Cost', 'Sell price', 'Date added'], ...state.products.map(p => [p.sku, p.name, p.category, p.qty, p.cost, p.price, p.date])];
+  download(`phone-shop-stock-${todayStr()}.csv`, new Blob(['\ufeff' + rows.map(r => r.map(csvCell).join(',')).join('\n')], {type: 'text/csv'}));
+}
+async function exportBackup() {
+  const ids = new Set([...state.products, ...state.sales, ...state.expenses, ...state.rl.buys].map(x => x.img).filter(Boolean)), images = {};
+  for (const id of ids) images[id] = await getImg(id);
+  download(`phone-shop-backup-${todayStr()}.json`, new Blob([JSON.stringify({version: 1, state, images})], {type: 'application/json'}));
+  toast('Backup downloaded');
+}
+$('#restoreFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text()); if (!d.state) throw 0;
+    if (!await askPw('Replace everything in the app with this backup?', 'Restore')) return;
+    state = d.state; state.names = state.names || {}; state.custom = state.custom || []; state.rl = state.rl || {cos: [], buys: [], sells: []}; state.settle = state.settle || []; state.journal = state.journal || []; for (const [id, v] of Object.entries(d.images || {})) { imgCache[id] = v; await idbSet('img', id, v); }
+    await save(); render(); toast('Backup restored');
+  } catch (err) { toast('That file is not a valid backup'); }
+  e.target.value = '';
+});
+
+/* ---------- start ---------- */
+(async function init() {
+  await openDB();
+  const saved = await idbGet('kv', 'state');
+  if (saved) state = Object.assign(state, saved, {settings: Object.assign(state.settings, saved.settings || {})});
+  state.settle = state.settle || []; state.journal = state.journal || []; state.custom = state.custom || [];
+  if (state.settings.shop === 'My Phone Shop') state.settings.shop = 'Future Mobile Diyawiddagama';
+  render();
+})();
+</script>
+</body>
+</html>
